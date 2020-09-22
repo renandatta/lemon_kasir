@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +18,13 @@ Route::get('image/{folder}/{filename}', function ($folder,$filename){
     return $response;
 });
 
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('auth')->group(function () {
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('login', [AuthController::class, 'login_proses'])->name('login.proses');
+});
+
