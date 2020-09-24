@@ -11,10 +11,8 @@ class FiturProgramController extends Controller
     public function __construct(FiturProgramRepository $fiturProgram)
     {
         $this->middleware('auth');
-        $this->middleware('hak_akses');
+//        $this->middleware('hak_akses');
 
-        $this->middleware('auth');
-        $this->middleware('hak_akses');
         $this->fiturProgram = $fiturProgram;
         view()->share(['title' => 'Fitur Program']);
         $this->breadcrumbs = array(
@@ -49,7 +47,7 @@ class FiturProgramController extends Controller
     {
         $fiturProgram = $this->fiturProgram->save($request);
         if ($request->has('ajax')) return $fiturProgram;
-        return redirect()->route('fitur_program')
+        return redirect()->route('pengaturan.fitur_program')
             ->with('success', 'Fitur Program berhasil disimpan');
     }
 
@@ -58,7 +56,7 @@ class FiturProgramController extends Controller
         if (!$request->has('id')) return abort(404);
         $fiturProgram = $this->fiturProgram->delete($request->input('id'));
         if ($request->has('ajax')) return $fiturProgram;
-        return redirect()->route('fitur_program')
+        return redirect()->route('pengaturan.fitur_program')
             ->with('success', 'Fitur Program berhasil dihapus');
     }
 

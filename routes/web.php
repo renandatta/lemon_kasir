@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
+use App\Http\Controllers\Program\FiturProgramController;
 use App\Http\Controllers\Program\UserController;
 use App\Http\Controllers\Program\UserLevelController;
 use Illuminate\Support\Facades\File;
@@ -55,6 +56,16 @@ Route::prefix('pengaturan')->group(function () {
         Route::post('search', [UserController::class, 'search'])->name('pengaturan.user.search');
         Route::post('save', [UserController::class, 'save'])->name('pengaturan.user.save');
         Route::post('delete', [UserController::class, 'delete'])->name('pengaturan.user.delete');
+    });
+
+    Route::prefix('fitur_program')->group(function () {
+        Route::get('/', [FiturProgramController::class, 'index'])->name('pengaturan.fitur_program');
+        Route::post('info', [FiturProgramController::class, 'info'])->name('pengaturan.fitur_program.info');
+        Route::post('search', [FiturProgramController::class, 'search'])->name('pengaturan.fitur_program.search');
+        Route::post('save', [FiturProgramController::class, 'save'])->name('pengaturan.fitur_program.save');
+        Route::post('delete', [FiturProgramController::class, 'delete'])->name('pengaturan.fitur_program.delete');
+        Route::post('kode_otomatis', [FiturProgramController::class, 'kode_otomatis'])->name('pengaturan.fitur_program.kode_otomatis');
+        Route::post('reposisi', [FiturProgramController::class, 'reposisi'])->name('pengaturan.fitur_program.reposisi');
     });
 
 });
