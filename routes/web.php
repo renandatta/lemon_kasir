@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
+use App\Http\Controllers\Program\UserController;
 use App\Http\Controllers\Program\UserLevelController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -41,6 +42,19 @@ Route::prefix('pengaturan')->group(function () {
         Route::post('search', [UserLevelController::class, 'search'])->name('pengaturan.user_level.search');
         Route::post('save', [UserLevelController::class, 'save'])->name('pengaturan.user_level.save');
         Route::post('delete', [UserLevelController::class, 'delete'])->name('pengaturan.user_level.delete');
+
+        Route::prefix('hak_akses')->group(function () {
+            Route::get('/', [UserLevelController::class, 'hak_akses'])->name('pengaturan.user_level.hak_akses');
+            Route::post('save', [UserLevelController::class, 'hak_akses_save'])->name('pengaturan.user_level.hak_akses.save');
+        });
+    });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('pengaturan.user');
+        Route::get('info', [UserController::class, 'info'])->name('pengaturan.user.info');
+        Route::post('search', [UserController::class, 'search'])->name('pengaturan.user.search');
+        Route::post('save', [UserController::class, 'save'])->name('pengaturan.user.save');
+        Route::post('delete', [UserController::class, 'delete'])->name('pengaturan.user.delete');
     });
 
 });

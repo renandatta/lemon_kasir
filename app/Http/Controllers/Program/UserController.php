@@ -11,7 +11,7 @@ class UserController extends Controller
     public function __construct(UserRepository $user, UserLevelRepository $userLevel)
     {
         $this->middleware('auth');
-        $this->middleware('hak_akses');
+//        $this->middleware('hak_akses');
 
         $this->user = $user;
         $this->userLevel = $userLevel;
@@ -62,9 +62,15 @@ class UserController extends Controller
 
     public function save(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|min:4|max:255',
+            'email' => 'required|min:4|max:255',
+            'user_level_id' => 'required|numeric',
+        ]);
+
         $user = $this->user->save($request);
         if ($request->has('ajax')) return $user;
-        return redirect()->route('user')
+        return redirect()->route('pengaturan.user')
             ->with('success', 'User berhasil disimpan');
     }
 
@@ -73,7 +79,7 @@ class UserController extends Controller
         if (!$request->has('id')) return abort(404);
         $user = $this->user->delete($request->input('id'));
         if ($request->has('ajax')) return $user;
-        return redirect()->route('user')
+        return redirect()->route('pengaturan.user')
             ->with('success', 'User berhasil dihapus');
     }
 

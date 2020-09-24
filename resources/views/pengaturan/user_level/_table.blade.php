@@ -7,6 +7,9 @@
         @if(in_array('edit', $action))
             <th width="50px"></th>
         @endif
+        @if(in_array('hak_akses', $action))
+            <th width="50px"></th>
+        @endif
     </tr>
     </thead>
     <tbody>
@@ -19,6 +22,13 @@
                 <td class="p-1">
                     <a href="{{ route('pengaturan.user_level.info', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon">
                         <i class="la la-edit"></i>
+                    </a>
+                </td>
+            @endif
+            @if(in_array('hak_akses', $action))
+                <td class="p-1">
+                    <a href="{{ route('user_level.hak_akses', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
+                        <i class="la la-shield"></i>
                     </a>
                 </td>
             @endif
