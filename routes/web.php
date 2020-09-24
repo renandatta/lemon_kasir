@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-
+use App\Http\Controllers\Home\DashboardController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +20,7 @@ Route::get('image/{folder}/{filename}', function ($folder,$filename){
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Route::prefix('auth')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -28,3 +28,6 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login_proses'])->name('login.proses');
 });
 
+Route::prefix('home')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('home.dashboard');
+});

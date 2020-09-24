@@ -35,6 +35,6 @@ class AuthController extends Controller
         ]);
         $auth = $this->user->login($request);
         if ($auth == false) return redirect()->route('login');
-        return redirect()->route('dashboard');
+        return redirect()->route('home.dashboard');
     }
 }
