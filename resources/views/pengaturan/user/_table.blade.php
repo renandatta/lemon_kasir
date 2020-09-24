@@ -5,7 +5,7 @@
         <th>Nama</th>
         <th>Username</th>
         <th>User Level</th>
-        <th>Terakhir Login</th>
+        <th class="text-right">Terakhir Login</th>
         @if(in_array('edit', $action))
             <th width="50px"></th>
         @endif
@@ -25,7 +25,7 @@
             <td>{{ $value->nama }}</td>
             <td>{{ $value->email }}</td>
             <td>{{ $value->user_level->nama }}</td>
-            <td>{{ !empty($value->last_login) ? $value->last_login->created_at : '-' }}</td>
+            <td class="text-right">{{ !empty($value->last_login) ? $value->last_login->created_at : '-' }}</td>
             @if(in_array('edit', $action))
                 <td class="p-1">
                     <a href="{{ route('pengaturan.user.info', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
