@@ -30,7 +30,7 @@ class UserLevelController extends Controller
             'parameters' => null,
             'desc' => 'Manajemen data user level program'
         ]);
-        return view('program.user_level.index', compact('breadcrumbs'));
+        return view('utama.user_level.index', compact('breadcrumbs'));
     }
 
     public function info(Request $request)
@@ -46,7 +46,7 @@ class UserLevelController extends Controller
         ]);
         $id = $request->input('id') ?? null;
         $user_level = ($id != null) ? $this->userLevel->find($id) : [];
-        return view('program.user_level.info', compact('breadcrumbs', 'user_level'));
+        return view('utama.user_level.info', compact('breadcrumbs', 'user_level'));
     }
 
     public function hak_akses(Request $request)
@@ -61,7 +61,7 @@ class UserLevelController extends Controller
             'desc' => 'Manajemen hak akses untuk user level program'
         ]);
         $user_level = $this->userLevel->find($id);
-        return view('program.user_level.hak_akses', compact('breadcrumbs', 'user_level'));
+        return view('utama.user_level.hak_akses', compact('breadcrumbs', 'user_level'));
     }
 
     public function search(Request $request)
@@ -69,7 +69,7 @@ class UserLevelController extends Controller
         $user_level = $this->userLevel->search_all();
         if ($request->has('ajax')) return $user_level;
         $action = $request->input('action') ?? array();
-        return view('program.user_level._table', compact('userLevel', 'action'));
+        return view('utama.user_level._table', compact('userLevel', 'action'));
     }
 
     public function save(Request $request)
