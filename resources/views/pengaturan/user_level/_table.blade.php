@@ -27,7 +27,7 @@
             @endif
             @if(in_array('hak_akses', $action))
                 <td class="p-1">
-                    <a href="{{ route('user_level.hak_akses', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
+                    <a href="{{ route('pengaturan.user_level.hak_akses', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
                         <i class="la la-shield"></i>
                     </a>
                 </td>
