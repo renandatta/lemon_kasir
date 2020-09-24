@@ -33,9 +33,10 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h6 class="text-muted">Nama : </h6>
-                                <h5 class="mb-5">{{ $userLevel->nama }}</h5>
+                                <h5 class="mb-5">{{ $user_level->nama }}</h5>
                                 <h6 class="text-muted">Keterangan : </h6>
-                                <h5 class="mb-5">{{ $userLevel->keterangan }}</h5>
+                                <h5 class="mb-5">{{ $user_level->keterangan }}</h5>
+                                <a href="{{ route('pengaturan.user_level') }}" class="btn btn-secondary px-10">Kembali</a>
                             </div>
                             <div class="col-md-8 border-left" style="border-left-style: dashed!important;">
                                 <h4>Akses Menu</h4>
@@ -58,9 +59,9 @@
     <script src="{{ asset('assets/plugins/custom/jstree/jstree.bundle.js?v=7.0.9') }}"></script>
     <script>
         let divTree = $("#tree_view_fitur_program");
-        $.post("{{ route('fitur_program.search') }}", {
+        $.post("{{ route('pengaturan.fitur_program.search') }}", {
             _token: '{{ csrf_token() }}',
-            user_level_id: '{{ $userLevel->id }}'
+            user_level_id: '{{ $user_level->id }}'
         }, function (result) {
             divTree.jstree({
                 core: {
@@ -84,10 +85,10 @@
             }).on("loaded.jstree", function () {
                 $(this).jstree("open_all");
             }).on("check_node.jstree uncheck_node.jstree", function(e, data) {
-                $.post("{{ route('user_level.hak_akses.save') }}", {
+                $.post("{{ route('pengaturan.user_level.hak_akses.save') }}", {
                     _token: '{{ csrf_token() }}',
                     fitur_program_id: data.node.original.id,
-                    user_level_id: '{{ $userLevel->id }}',
+                    user_level_id: '{{ $user_level->id }}',
                     flag_akses: data.node.state.checked ? 1 : 0
                 }, function (result) {
                     console.log(result);

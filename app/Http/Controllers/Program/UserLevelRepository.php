@@ -17,7 +17,7 @@ class UserLevelRepository
 
     public function search_all()
     {
-        return $this->userLevel->orderBy('nama', 'asc')->get();
+        return $this->userLevel->orderBy('id', 'asc')->get();
     }
 
     public function find($value, $column = 'id')
