@@ -11,7 +11,7 @@ class FiturProgramController extends Controller
     public function __construct(FiturProgramRepository $fiturProgram)
     {
         $this->middleware('auth');
-//        $this->middleware('hak_akses');
+        $this->middleware('hak_akses');
 
         $this->fiturProgram = $fiturProgram;
         view()->share(['title' => 'Fitur Program']);

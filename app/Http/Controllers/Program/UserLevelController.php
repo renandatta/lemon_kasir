@@ -11,7 +11,7 @@ class UserLevelController extends Controller
     public function __construct(UserLevelRepository $user_level)
     {
         $this->middleware('auth');
-//        $this->middleware('hak_akses');
+        $this->middleware('hak_akses');
 
         $this->userLevel = $user_level;
         view()->share(['title' => 'User Level']);

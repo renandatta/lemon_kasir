@@ -11,7 +11,7 @@ class UserController extends Controller
     public function __construct(UserRepository $user, UserLevelRepository $userLevel)
     {
         $this->middleware('auth');
-//        $this->middleware('hak_akses');
+        $this->middleware('hak_akses');
 
         $this->user = $user;
         $this->userLevel = $userLevel;
