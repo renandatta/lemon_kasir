@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Program;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -26,6 +27,9 @@ class UserController extends Controller
 
     public function index()
     {
+        Session::put('modul_aktif', 'Pengaturan');
+        Session::put('menu_aktif', 'pengaturan.user');
+
         $breadcrumbs = $this->breadcrumbs;
         array_push($breadcrumbs, [
             'url' => null,

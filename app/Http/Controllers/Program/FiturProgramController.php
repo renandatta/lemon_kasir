@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Program;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class FiturProgramController extends Controller
 {
@@ -23,6 +24,9 @@ class FiturProgramController extends Controller
 
     public function index()
     {
+        Session::put('modul_aktif', 'Pengaturan');
+        Session::put('menu_aktif', 'pengaturan.fitur_program');
+
         $breadcrumbs = $this->breadcrumbs;
         array_push($breadcrumbs, [
             'url' => null, 'caption' => 'Data Fitur Program', 'parameters' => null, 'desc' => 'Manajemen data fitur program'
