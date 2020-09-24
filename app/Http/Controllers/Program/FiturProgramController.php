@@ -29,7 +29,7 @@ class FiturProgramController extends Controller
         array_push($breadcrumbs, [
             'url' => null, 'caption' => 'Data Fitur Program', 'parameters' => null, 'desc' => 'Manajemen data fitur program'
         ]);
-        return view('utama.fitur_program.index', compact('breadcrumbs'));
+        return view('pengaturan.fitur_program.index', compact('breadcrumbs'));
     }
 
     public function info(Request $request)

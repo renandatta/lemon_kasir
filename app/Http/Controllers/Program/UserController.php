@@ -33,7 +33,7 @@ class UserController extends Controller
             'parameters' => null,
             'desc' => 'Manajemen data user program'
         ]);
-        return view('utama.user.index', compact('breadcrumbs'));
+        return view('pengaturan.user.index', compact('breadcrumbs'));
     }
 
     public function info(Request $request)
@@ -49,7 +49,7 @@ class UserController extends Controller
         ]);
         $id = $request->input('id') ?? null;
         $user = ($id != null) ? $this->user->find($id) : [];
-        return view('utama.user.info', compact('breadcrumbs', 'user'));
+        return view('pengaturan.user.info', compact('breadcrumbs', 'user'));
     }
 
     public function search(Request $request)
@@ -57,7 +57,7 @@ class UserController extends Controller
         $user = $this->user->search_all($request);
         if ($request->has('ajax')) return $user;
         $action = $request->input('action') ?? array();
-        return view('utama.user._table', compact('user', 'action'));
+        return view('pengaturan.user._table', compact('user', 'action'));
     }
 
     public function save(Request $request)

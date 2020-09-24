@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
+use App\Http\Controllers\Program\UserLevelController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,16 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('home')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('home.dashboard');
+});
+
+Route::prefix('pengaturan')->group(function () {
+
+    Route::prefix('user_level')->group(function () {
+        Route::get('/', [UserLevelController::class, 'index'])->name('pengaturan.user_level');
+        Route::get('info', [UserLevelController::class, 'info'])->name('pengaturan.user_level.info');
+        Route::post('search', [UserLevelController::class, 'search'])->name('pengaturan.user_level.search');
+        Route::post('save', [UserLevelController::class, 'save'])->name('pengaturan.user_level.save');
+        Route::post('delete', [UserLevelController::class, 'delete'])->name('pengaturan.user_level.delete');
+    });
+
 });

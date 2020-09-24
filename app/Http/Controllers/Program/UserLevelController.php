@@ -11,7 +11,7 @@ class UserLevelController extends Controller
     public function __construct(UserLevelRepository $user_level)
     {
         $this->middleware('auth');
-        $this->middleware('hak_akses');
+//        $this->middleware('hak_akses');
 
         $this->userLevel = $user_level;
         view()->share(['title' => 'User Level']);
@@ -30,7 +30,7 @@ class UserLevelController extends Controller
             'parameters' => null,
             'desc' => 'Manajemen data user level program'
         ]);
-        return view('utama.user_level.index', compact('breadcrumbs'));
+        return view('pengaturan.user_level.index', compact('breadcrumbs'));
     }
 
     public function info(Request $request)
@@ -46,7 +46,7 @@ class UserLevelController extends Controller
         ]);
         $id = $request->input('id') ?? null;
         $user_level = ($id != null) ? $this->userLevel->find($id) : [];
-        return view('utama.user_level.info', compact('breadcrumbs', 'user_level'));
+        return view('pengaturan.user_level.info', compact('breadcrumbs', 'user_level'));
     }
 
     public function hak_akses(Request $request)
@@ -61,7 +61,7 @@ class UserLevelController extends Controller
             'desc' => 'Manajemen hak akses untuk user level program'
         ]);
         $user_level = $this->userLevel->find($id);
-        return view('utama.user_level.hak_akses', compact('breadcrumbs', 'user_level'));
+        return view('pengaturan.user_level.hak_akses', compact('breadcrumbs', 'user_level'));
     }
 
     public function search(Request $request)
@@ -69,14 +69,14 @@ class UserLevelController extends Controller
         $user_level = $this->userLevel->search_all();
         if ($request->has('ajax')) return $user_level;
         $action = $request->input('action') ?? array();
-        return view('utama.user_level._table', compact('userLevel', 'action'));
+        return view('pengaturan.user_level._table', compact('user_level', 'action'));
     }
 
     public function save(Request $request)
     {
         $user_level = $this->userLevel->save($request);
         if ($request->has('ajax')) return $user_level;
-        return redirect()->route('user_level')
+        return redirect()->route('pengaturan.user_level')
             ->with('success', 'User Level berhasil disimpan');
     }
 
@@ -85,7 +85,7 @@ class UserLevelController extends Controller
         if (!$request->has('id')) return abort(404);
         $user_level = $this->userLevel->delete($request->input('id'));
         if ($request->has('ajax')) return $user_level;
-        return redirect()->route('user_level')
+        return redirect()->route('pengaturan.user_level')
             ->with('success', 'User Level berhasil dihapus');
     }
 
