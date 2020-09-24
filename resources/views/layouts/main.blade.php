@@ -28,7 +28,7 @@
     @stack('styles')
 </head>
 
-<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading @if($user_aktif->user_level_id == 3) aside-minimize @endif">
+<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
 
 <div id="kt_header_mobile" class="header-mobile">
     <a href="{{ route('/') }}">
@@ -63,11 +63,9 @@
                     </ul>
                 </div>
                 <div class="aside-footer d-flex flex-column align-items-center flex-column-auto py-4 py-lg-10">
-                    @if($user_aktif->user_level_id != 3)
-                        <span class="aside-toggle btn btn-icon btn-primary btn-hover-primary shadow-sm" id="kt_aside_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Toggle Aside">
-                            <i class="ki ki-bold-arrow-back icon-sm"></i>
-                        </span>
-                    @endif
+                    <span class="aside-toggle btn btn-icon btn-primary btn-hover-primary shadow-sm" id="kt_aside_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Toggle Aside">
+                        <i class="ki ki-bold-arrow-back icon-sm"></i>
+                    </span>
                     <a href="#" class="btn btn-icon btn-clean btn-lg w-40px h-40px" id="kt_quick_user_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="User Profil">
                         <span class="svg-icon svg-icon-primary svg-icon-2x"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <polygon points="0 0 24 0 24 24 0 24"/> <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/> <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"/> </g> </svg></span>
                     </a>
@@ -75,44 +73,41 @@
 
             </div>
 
-
-            @if($user_aktif->user_level_id != 3)
-                <div class="aside-secondary d-flex flex-row-fluid">
-                    <div class="aside-workspace scroll scroll-push my-2">
-                        <div class="tab-content">
-                            @foreach($fitur_program as $key => $fitur)
-                                @if($fitur->flag_akses == true)
-                                    <div class="tab-pane {{ $fitur->text == $modul_aktif ? 'show active' : 'fade' }}" id="kt_aside_tab_{{ $key }}">
-                                        <div class="aside-menu-wrapper flex-column-fluid px-10 py-5">
-                                            <div class="aside-menu min-h-lg-800px" data-menu-vertical="1" data-menu-scroll="1">
-                                                <ul class="menu-nav">
-                                                    @foreach($fitur->children as $menu)
-                                                        @if($menu->flag_akses == true)
-                                                            @if($menu->url == '')
-                                                                <li class="menu-section">
-                                                                    <h4 class="menu-text">{{ $menu->text }}</h4>
-                                                                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-                                                                </li>
-                                                            @else
-                                                                <li class="menu-item {{ $menu_aktif == $menu->url ? 'menu-item-active' : '' }}">
-                                                                    <a href="{{ \Illuminate\Support\Facades\Route::has($menu->url) ? route($menu->url) : '#' }}" class="menu-link">
-                                                                        {!! $menu->menu_icon !!}
-                                                                        <span class="menu-text">{{ $menu->text }}</span>
-                                                                    </a>
-                                                                </li>
-                                                            @endif
+            <div class="aside-secondary d-flex flex-row-fluid">
+                <div class="aside-workspace scroll scroll-push my-2">
+                    <div class="tab-content">
+                        @foreach($fitur_program as $key => $fitur)
+                            @if($fitur->flag_akses == true)
+                                <div class="tab-pane {{ $fitur->text == $modul_aktif ? 'show active' : 'fade' }}" id="kt_aside_tab_{{ $key }}">
+                                    <div class="aside-menu-wrapper flex-column-fluid px-10 py-5">
+                                        <div class="aside-menu min-h-lg-800px" data-menu-vertical="1" data-menu-scroll="1">
+                                            <ul class="menu-nav">
+                                                @foreach($fitur->children as $menu)
+                                                    @if($menu->flag_akses == true)
+                                                        @if($menu->url == '')
+                                                            <li class="menu-section">
+                                                                <h4 class="menu-text">{{ $menu->text }}</h4>
+                                                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                                                            </li>
+                                                        @else
+                                                            <li class="menu-item {{ $menu_aktif == $menu->url ? 'menu-item-active' : '' }}">
+                                                                <a href="{{ \Illuminate\Support\Facades\Route::has($menu->url) ? route($menu->url) : '#' }}" class="menu-link">
+                                                                    {!! $menu->menu_icon !!}
+                                                                    <span class="menu-text">{{ $menu->text }}</span>
+                                                                </a>
+                                                            </li>
                                                         @endif
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
                                         </div>
                                     </div>
-                                @endif
-                            @endforeach
-                        </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
 
         <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
