@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
+use App\Http\Controllers\Master\LisensiController;
 use App\Http\Controllers\Pengaturan\FiturProgramController;
 use App\Http\Controllers\Pengaturan\UserController;
 use App\Http\Controllers\Pengaturan\UserLevelController;
@@ -66,6 +67,17 @@ Route::prefix('pengaturan')->group(function () {
         Route::post('delete', [FiturProgramController::class, 'delete'])->name('pengaturan.fitur_program.delete');
         Route::post('kode_otomatis', [FiturProgramController::class, 'kode_otomatis'])->name('pengaturan.fitur_program.kode_otomatis');
         Route::post('reposisi', [FiturProgramController::class, 'reposisi'])->name('pengaturan.fitur_program.reposisi');
+    });
+
+});
+
+Route::prefix('master')->group(function () {
+    Route::prefix('lisensi')->group(function () {
+        Route::get('/', [LisensiController::class, 'index'])->name('master.lisensi');
+        Route::get('info', [LisensiController::class, 'info'])->name('master.lisensi.info');
+        Route::post('search', [LisensiController::class, 'search'])->name('master.lisensi.search');
+        Route::post('save', [LisensiController::class, 'save'])->name('master.lisensi.save');
+        Route::post('delete', [LisensiController::class, 'delete'])->name('master.lisensi.delete');
     });
 
 });
