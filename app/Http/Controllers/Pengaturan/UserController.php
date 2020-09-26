@@ -87,9 +87,4 @@ class UserController extends Controller
             ->with('success', 'User berhasil dihapus');
     }
 
-    public function hak_akses_save(Request $request)
-    {
-        if (!$request->has('user_id')) return abort(404);
-        return $this->user->hak_akses_save($request);
-    }
 }
