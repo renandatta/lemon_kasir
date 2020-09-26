@@ -112,7 +112,7 @@ function unformat_date($date)
 
 function unformat_number($number)
 {
-    if ($number == "") return "";
+    if ($number == "") return "0";
     $number = str_replace(".", "", $number);
     $number = str_replace(",", ".", $number);
     return $number;
