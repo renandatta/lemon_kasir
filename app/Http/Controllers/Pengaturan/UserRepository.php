@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Pengaturan;
 
+use App\Http\Controllers\Repository;
 use App\Models\Pengaturan\User;
 use App\Models\Pengaturan\UserAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository
+class UserRepository extends Repository
 {
     protected $user, $userAuth;
     public function __construct(User $user, UserAuth $userAuth)
@@ -22,17 +23,18 @@ class UserRepository
         $user = $this->user->orderBy('nama', 'asc')
             ->with(['user_level', 'last_login']);
 
+        $filters = array();
+
         $nama = $request->input('nama') ?? '';
-        if ($nama != '')
-            $user = $user->where('nama', 'like', '%'. $nama .'%');
+        array_push($filters, ['nama' => ['operator' => 'like', 'value' => $nama]]);
 
         $email = $request->input('email') ?? '';
-        if ($email != '')
-            $user = $user->where('email', 'like', '%'. $email .'%');
+        array_push($filters, ['email' => ['operator' => 'like', 'value' => $email]]);
 
         $userLevelId = $request->input('user_level_id') ?? '';
-        if ($userLevelId != '')
-            $user = $user->where('user_level_id', '=', $userLevelId);
+        if ($userLevelId != '') array_push($filters, ['user_level_id' => $userLevelId]);
+
+        $user = $this->filter($user, $filters);
 
         if ($request->has('paginate'))
             return $user->paginate($request->input('paginate'));
