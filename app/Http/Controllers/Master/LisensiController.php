@@ -12,7 +12,7 @@ class LisensiController extends Controller
     public function __construct(LisensiRepository $lisensi)
     {
         $this->middleware('auth');
-        //$this->middleware('hak_akses');
+        $this->middleware('hak_akses');
 
         $this->lisensi = $lisensi;
         view()->share(['title' => 'Lisensi']);
