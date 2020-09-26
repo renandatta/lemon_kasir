@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
-use App\Http\Controllers\Program\FiturProgramController;
-use App\Http\Controllers\Program\UserController;
-use App\Http\Controllers\Program\UserLevelController;
+use App\Http\Controllers\Pengaturan\FiturProgramController;
+use App\Http\Controllers\Pengaturan\UserController;
+use App\Http\Controllers\Pengaturan\UserLevelController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;

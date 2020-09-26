@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Program;
+namespace App\Http\Controllers\Pengaturan;
 
-use App\Models\ModulUtama\User;
-use App\Models\ModulUtama\UserAuth;
+use App\Models\Pengaturan\User;
+use App\Models\Pengaturan\UserAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

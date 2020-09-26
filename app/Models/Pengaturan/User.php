@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ModulUtama;
+namespace App\Models\Pengaturan;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;

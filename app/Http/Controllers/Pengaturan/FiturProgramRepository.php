@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Program;
+namespace App\Http\Controllers\Pengaturan;
 
-use App\Models\ModulUtama\FiturProgram;
-use App\Models\ModulUtama\HakAkses;
+use App\Models\Pengaturan\FiturProgram;
+use App\Models\Pengaturan\HakAkses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

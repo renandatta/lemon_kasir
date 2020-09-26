@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\ModulUtama\User;
+use App\Models\Pengaturan\User;
 
 return [
 

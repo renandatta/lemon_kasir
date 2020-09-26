@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\ModulUtama\User;
-use App\Models\ModulUtama\UserLevel;
+use App\Models\Pengaturan\User;
+use App\Models\Pengaturan\UserLevel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Program;
+namespace App\Http\Controllers\Pengaturan;
 
-use App\Models\ModulUtama\HakAkses;
-use App\Models\ModulUtama\UserLevel;
+use App\Models\Pengaturan\HakAkses;
+use App\Models\Pengaturan\UserLevel;
 use Illuminate\Http\Request;
 
 class UserLevelRepository
