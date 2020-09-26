@@ -8,21 +8,20 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    protected $breadcrumbs, $user, $userLevel;
+    protected $breadcrumbs, $user;
     public function __construct(UserRepository $user, UserLevelRepository $userLevel)
     {
         $this->middleware('auth');
         $this->middleware('hak_akses');
 
         $this->user = $user;
-        $this->userLevel = $userLevel;
         view()->share(['title' => 'User']);
         $this->breadcrumbs = array(
             ['url' => null, 'caption' => 'Modul Program', 'parameters' => null],
             ['url' => 'user', 'caption' => 'User', 'parameters' => null],
         );
 
-        view()->share(['userLevel' => $this->userLevel->search_all()]);
+        view()->share(['userLevel' => $userLevel->search_all()]);
     }
 
     public function index()
