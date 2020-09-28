@@ -7,7 +7,7 @@
             </h3>
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body pt-2">
         <table class="table table-borderless">
             <tr><td class="px-0">Nama : <br><b>{{ $profil->nama }}</b></td></tr>
             <tr><td class="px-0">No.Telp : <br><b>{{ $profil->notelp }}</b></td></tr>
