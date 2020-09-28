@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Master\LisensiController;
 use App\Http\Controllers\Master\ProfilController;
+use App\Http\Controllers\Master\UserProfilController;
 use App\Http\Controllers\Pengaturan\FiturProgramController;
 use App\Http\Controllers\Pengaturan\UserController;
 use App\Http\Controllers\Pengaturan\UserLevelController;
@@ -88,6 +89,14 @@ Route::prefix('master')->group(function () {
         Route::post('search', [ProfilController::class, 'search'])->name('master.profil.search');
         Route::post('save', [ProfilController::class, 'save'])->name('master.profil.save');
         Route::post('delete', [ProfilController::class, 'delete'])->name('master.profil.delete');
+
+        Route::prefix('{profil}/user')->group(function () {
+            Route::get('/', [UserProfilController::class, 'index'])->name('master.profil.user');
+            Route::get('info', [UserProfilController::class, 'info'])->name('master.profil.user.info');
+            Route::post('search', [UserProfilController::class, 'search'])->name('master.profil.user.search');
+            Route::post('save', [UserProfilController::class, 'save'])->name('master.profil.user.save');
+            Route::post('delete', [UserProfilController::class, 'delete'])->name('master.profil.user.delete');
+        });
     });
 
 });

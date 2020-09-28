@@ -3,43 +3,31 @@
     <tr>
         <th width="50px">No</th>
         <th>Nama</th>
-        <th>Notelp</th>
-        <th>Alamat</th>
-        <th>Kota</th>
+        <th>Username</th>
+        <th class="text-right">Terakhir Login</th>
         @if(in_array('edit', $action))
-            <th width="50px"></th>
-        @endif
-        @if(in_array('user', $action))
             <th width="50px"></th>
         @endif
     </tr>
     </thead>
     <tbody>
-    @if($profil instanceof \Illuminate\Pagination\Paginator)
+    @if($user_profil instanceof \Illuminate\Pagination\Paginator)
         @php
-            $no = isset($profil) ? $profil->firstItem() : 1;
+            $no = isset($user_profil) ? $user_profil->firstItem() : 1;
         @endphp
     @else
         @php($no = 1)
     @endif
-    @forelse($profil as $key => $value)
+    @forelse($user_profil as $key => $value)
         <tr>
             <td>{{ $no++ }}</td>
-            <td>{{ $value->nama }}</td>
-            <td>{{ $value->notelp }}</td>
-            <td>{{ $value->alamat }}</td>
-            <td>{{ $value->kota }}</td>
+            <td>{{ $value->user->nama }}</td>
+            <td>{{ $value->user->email }}</td>
+            <td class="text-right">{{ !empty($value->user->last_login) ? $value->user->last_login->created_at : '-' }}</td>
             @if(in_array('edit', $action))
                 <td class="p-1">
-                    <a href="{{ route('master.profil.info', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
+                    <a href="{{ route('master.profil.user.info', [$profil->id, 'id=' . $value->id]) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
                         <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <rect x="0" y="0" width="24" height="24"></rect> <path d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) " ></path> <path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" ></path> </g> </svg> </span>
-                    </a>
-                </td>
-            @endif
-            @if(in_array('user', $action))
-                <td class="p-1">
-                    <a href="{{ route('master.profil.user', $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="User Profil">
-                        <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <polygon points="0 0 24 0 24 24 0 24"/> <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/> <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero"/> </g> </svg></span>
                     </a>
                 </td>
             @endif
@@ -51,6 +39,6 @@
     @endforelse
     </tbody>
 </table>
-@if(method_exists($profil,'links'))
-    {{ $profil->links() }}
+@if(method_exists($user_profil,'links'))
+    {{ $user_profil->links() }}
 @endif
