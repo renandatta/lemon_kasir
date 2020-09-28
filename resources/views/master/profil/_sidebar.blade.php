@@ -1,4 +1,4 @@
-<div class="card card-custom mb-5" id="card_pencarian">
+<div class="card card-custom mb-5">
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
