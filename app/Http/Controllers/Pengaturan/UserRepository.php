@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Pengaturan;
 
-use App\Http\Controllers\Repository;
 use App\Models\Pengaturan\User;
 use App\Models\Pengaturan\UserAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository extends Repository
+class UserRepository
 {
     protected $user, $userAuth;
     public function __construct(User $user, UserAuth $userAuth)
