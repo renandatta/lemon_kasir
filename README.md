@@ -1,10 +1,31 @@
 <ul>
-<li>fitur_program</li>
-<li>user_level</li>
-<li>hak_akses</li>
-<li>user_auth</li>
-<li>user_log</li>
-<li>lisensi</li>
-<li>profil</li>
-<li>lisensi_profil</li>
+    <li>
+        Home
+        <ul>
+            <li>dashboard</li>
+        </ul>
+    </li>
+    <li>
+        Pengaturan
+        <ul>
+            <li>fitur_program</li>
+            <li>user_level</li>
+            <li>hak_akses</li>
+            <li>user_auth</li>
+            <li>user_log</li>
+        </ul>
+    </li>
+    <li>
+        Master
+        <ul>
+            <li>lisensi</li>
+            <li>
+                profil
+                <ul>
+                    <li>user_profil</li>
+                    <li>lisensi_profil</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
 </ul>
