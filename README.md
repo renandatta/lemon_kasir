@@ -1,3 +1,4 @@
+### Web
 <ul>
     <li>
         Home
@@ -26,6 +27,81 @@
                     <li>lisensi_profil</li>
                 </ul>
             </li>
+        </ul>
+    </li>
+</ul>
+
+### API
+
+<ul>
+    <li>
+        auth
+        <ul>
+            <li>/register</li>
+            <li>/login</li>
+            <li>/logout</li>
+        </ul>
+    </li>
+    <li>
+        profil
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+        </ul>
+    </li>
+    <li>
+        user
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+            <li>/delete</li>
+        </ul>
+    </li>
+    <li>
+        meja
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+            <li>/delete</li>
+        </ul>
+    </li>
+    <li>
+        produk_kategori
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+            <li>/delete</li>
+        </ul>
+    </li>
+    <li>
+        produk
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+            <li>/delete</li>
+        </ul>
+    </li>
+    <li>
+        penjualan
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+            <li>/delete</li>
+        </ul>
+    </li>
+    <li>
+        pembayaran
+        <ul>
+            <li>/</li>
+            <li>/info</li>
+            <li>/save</li>
+            <li>/delete</li>
         </ul>
     </li>
 </ul>
