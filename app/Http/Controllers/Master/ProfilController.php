@@ -58,6 +58,7 @@ class ProfilController extends Controller
         $profil = $this->profil->search($request);
         if ($request->has('ajax')) return $profil;
         $action = $request->input('action') ?? array();
+        $action = $this->additional_action($action);
         return view('master.profil._table', compact('profil', 'action'));
     }
 
