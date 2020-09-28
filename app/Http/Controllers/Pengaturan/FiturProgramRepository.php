@@ -34,46 +34,35 @@ class FiturProgramRepository
 
         $data = $this->fiturProgram
             ->select('id', 'nama as text', 'kode', 'parent_kode', 'url', 'icon as menu_icon')
-            ->where('parent_kode', '=', $parent_kode)
+            ->where('parent_kode', 'like', ($parent_kode == '#' ? '' : $parent_kode). '%')
             ->get();
         if (count($data) > 0) {
-            foreach ($data as $value) {
-                $childrens = $this->fiturProgram
-                    ->select('id', 'nama as text', 'kode', 'parent_kode', 'url', 'icon as menu_icon')
-                    ->where('parent_kode', 'like', $value->kode. '%')
-                    ->orderBy('kode', 'asc')
-                    ->get();
-                foreach ($childrens as $children) {
-                    if (!in_array($children->id, $this->skip)) {
-                        $children->flag_akses = in_array($children->id, $fitur_id_akses) ? true : false;
-                        $children->state = [
-                            'checked' => $children->flag_akses
-                        ];
-                        $children->children = $this->get_children_from_array($childrens, $children->kode);
-                    }
-                }
-                $value->flag_akses = in_array($value->id, $fitur_id_akses) ? true : false;
-                $value->state = [
-                    'checked' => $value->flag_akses
-                ];
-                $value->children = $childrens;
-                array_push($result, $value);
+            $result = $this->get_children_from_array($data, $parent_kode, $fitur_id_akses);
+        }
+        return $result;
+    }
+
+    public function get_children_from_array($data, $parent_kode, $fitur_id_akses)
+    {
+        $result = array();
+        foreach ($data as $item) {
+            if (!in_array($item->id, $this->skip) && $item->parent_kode == $parent_kode) {
+                array_push($this->skip, $item->id);
+                $item = $this->set_flag_akses($item, $fitur_id_akses);
+                $item->children = $this->get_children_from_array($data, $item->kode, $fitur_id_akses);
+                array_push($result, $item);
             }
         }
         return $result;
     }
 
-    public function get_children_from_array($data, $parent_kode)
+    public function set_flag_akses($data, $fitur_id_akses)
     {
-        $result = array();
-        foreach ($data as $item) {
-            if (!in_array($item->id, $this->skip) && $item->parent_kode == $parent_kode) {
-                $item->children = $this->get_children_from_array($data, $item->kode);
-                array_push($result, $item);
-                array_push($this->skip, $item->id);
-            }
-        }
-        return $result;
+        $data->flag_akses = in_array($data->id, $fitur_id_akses) ? true : false;
+        $data->state = [
+            'checked' => $data->flag_akses
+        ];
+        return $data;
     }
 
     public function find($value, $column = 'id')
