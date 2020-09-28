@@ -15,10 +15,13 @@ class CreateUserProfilTable extends Migration
     {
         Schema::create('user_profil', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('profil_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('profil_id')->references('id')->on('profil');
+            $table->foreign('user_id')->references('id')->on('user');
         });
     }
 
