@@ -6,6 +6,8 @@
         <th>Notelp</th>
         <th>Alamat</th>
         <th>Kota</th>
+        <th>User</th>
+        <th>Lisensi</th>
         @if(in_array('edit', $action))
             <th width="40px"></th>
         @endif
@@ -32,6 +34,8 @@
             <td>{{ $value->notelp }}</td>
             <td>{{ $value->alamat }}</td>
             <td>{{ $value->kota }}</td>
+            <td>{{ join(", ", $value->user->pluck('nama_user')->toArray()) }}</td>
+            <td>{{ join(", ", $value->lisensi->pluck('nama_lisensi')->toArray()) }}</td>
             @if(in_array('edit', $action))
                 <td class="p-1">
                     <a href="{{ route('master.profil.info', 'id=' . $value->id) }}" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon" title="Edit details">
