@@ -32,7 +32,7 @@ class ProfilController extends Controller
             'url' => null,
             'caption' => 'Data Profil',
             'parameters' => null,
-            'desc' => 'Manajemen data profil w'
+            'desc' => 'Manajemen data profil'
         ]);
         return view('master.profil.index', compact('breadcrumbs'));
     }
