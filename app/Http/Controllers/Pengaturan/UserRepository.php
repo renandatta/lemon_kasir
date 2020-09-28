@@ -26,13 +26,14 @@ class UserRepository extends Repository
         $filters = array();
 
         $nama = $request->input('nama') ?? '';
-        array_push($filters, ['nama' => ['operator' => 'like', 'value' => $nama]]);
+        $user = $user->where('nama', 'like', '%'. $nama .'%');
 
         $email = $request->input('email') ?? '';
-        array_push($filters, ['email' => ['operator' => 'like', 'value' => $email]]);
+        $user = $user->where('email', 'like', '%'. $email .'%');
 
-        $userLevelId = $request->input('user_level_id') ?? '';
-        if ($userLevelId != '') array_push($filters, ['user_level_id' => $userLevelId]);
+        $user_level_id = $request->input('user_level_id') ?? '';
+        if ($user_level_id != '')
+            $user = $user->where('user_level_id', '=', $user_level_id);
 
         $user = $this->filter($user, $filters);
 
