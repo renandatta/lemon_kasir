@@ -22,8 +22,6 @@ class UserRepository
         $user = $this->user->orderBy('nama', 'asc')
             ->with(['user_level', 'last_login']);
 
-        $filters = array();
-
         $nama = $request->input('nama') ?? '';
         $user = $user->where('nama', 'like', '%'. $nama .'%');
 
@@ -33,8 +31,6 @@ class UserRepository
         $user_level_id = $request->input('user_level_id') ?? '';
         if ($user_level_id != '')
             $user = $user->where('user_level_id', '=', $user_level_id);
-
-        $user = $this->filter($user, $filters);
 
         if ($request->has('paginate'))
             return $user->paginate($request->input('paginate'));
