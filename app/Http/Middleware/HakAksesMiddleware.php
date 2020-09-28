@@ -20,12 +20,12 @@ class HakAksesMiddleware
         $method_post = $request->isMethod('post');
         $exception = array('profil', 'ubah_password', '/');
         $current_route = $request->route()->getName();
+
         $fitur_program = $this->fiturProgram->nested_data('#', Auth::user()->user_level_id);
         foreach ($fitur_program as $fitur) {
-            foreach ($fitur->children as $menu) {
+            foreach ($fitur->children as $menu)
                 if ($menu->url != null && strpos($current_route, $menu->url) !== false && $menu->flag_akses == true)
                     $blocked = false;
-            }
             if ($fitur->url != null && strpos($current_route, $fitur->url) !== false && $fitur->flag_akses == true)
                 $blocked = false;
         }
@@ -34,8 +34,6 @@ class HakAksesMiddleware
         if ($blocked == false) {
             view()->share(['fitur_program' => $fitur_program]);
             return $next($request);
-        } else {
-            return abort(404);
-        }
+        } else return abort(404);
     }
 }
