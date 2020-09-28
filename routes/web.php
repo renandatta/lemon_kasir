@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Master\LisensiController;
+use App\Http\Controllers\Master\LisensiProfilController;
 use App\Http\Controllers\Master\ProfilController;
 use App\Http\Controllers\Master\UserProfilController;
 use App\Http\Controllers\Pengaturan\FiturProgramController;
@@ -96,6 +97,14 @@ Route::prefix('master')->group(function () {
             Route::post('search', [UserProfilController::class, 'search'])->name('master.profil.user.search');
             Route::post('save', [UserProfilController::class, 'save'])->name('master.profil.user.save');
             Route::post('delete', [UserProfilController::class, 'delete'])->name('master.profil.user.delete');
+        });
+
+        Route::prefix('{profil}/lisensi')->group(function () {
+            Route::get('/', [LisensiProfilController::class, 'index'])->name('master.profil.lisensi');
+            Route::get('info', [LisensiProfilController::class, 'info'])->name('master.profil.lisensi.info');
+            Route::post('search', [LisensiProfilController::class, 'search'])->name('master.profil.lisensi.search');
+            Route::post('save', [LisensiProfilController::class, 'save'])->name('master.profil.lisensi.save');
+            Route::post('delete', [LisensiProfilController::class, 'delete'])->name('master.profil.lisensi.delete');
         });
     });
 
