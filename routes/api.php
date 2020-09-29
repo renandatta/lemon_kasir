@@ -11,3 +11,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::post('lisensi', [LisensiController::class, 'search']);
+
+Route::prefix('profil')->group(function () {
+    //Route::post('info', [LisensiController::class, 'search']);
+});

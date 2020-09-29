@@ -28,6 +28,7 @@ class AuthController extends Controller
         $request->merge(['_token' => Str::random(32)]);
         $user = $this->user->login(new Request($request->only(['email', 'password', '_token'])));
         if ($user == false) return response()->json(['error' => 'Username atau password salah !']);
+        $user->profil_id = $user->user_profil->profil_id;
         return response()->json(['success' => $user]);
     }
 
@@ -71,6 +72,7 @@ class AuthController extends Controller
         $login_req = new Request($request->only('email', 'password'));
         $login_req->merge(['_token' => Str::random(32)]);
         $user = $this->user->login($login_req);
+        $user->profil_id = $user->user_profil->profil_id;
         return response()->json(['success' => $user]);
     }
 }

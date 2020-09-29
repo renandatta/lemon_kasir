@@ -2,6 +2,7 @@
 
 namespace App\Models\Pengaturan;
 
+use App\Models\Master\UserProfil;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,5 +33,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserAuth::class, 'user_id', 'id')
             ->orderBy('id', 'desc');
+    }
+
+    public function user_profil()
+    {
+        return $this->hasOne(UserProfil::class, 'user_id', 'id');
     }
 }
