@@ -3,23 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Master\UserProfilRepository;
 use App\Http\Controllers\Pengaturan\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    protected $user;
-    public function __construct(UserRepository $user)
+    protected $user, $userProfil;
+    public function __construct(UserRepository $user, UserProfilRepository $userProfil)
     {
         $this->user = $user;
+        $this->userProfil = $userProfil;
         $this->middleware('auth_api');
     }
 
     public function search(Request $request)
     {
         $profil = $this->user->cek_login($request->input('_token'))->user->user_profil->profil;
-        $request->merge(['profi_id' => $profil->id]);
-        $user = $this->user->search_all($request);
+        $request->merge(['profil_id' => $profil->id]);
+        $user = $this->userProfil->search($request)->pluck('user');
         return response()->json(['success' => $user]);
     }
 
@@ -33,8 +35,6 @@ class UserController extends Controller
     public function save(Request $request)
     {
         if (!$request->has('nama') || !$request->has('email')) return abort(404);
-        $profil = $this->user->cek_login($request->input('_token'))->user->user_profil->profil;
-        $request->merge(['profil_id' => $profil->id]);
         $user = $this->user->save($request);
         return response()->json(['success' => $user]);
     }
