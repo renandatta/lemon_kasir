@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Pengaturan;
 use App\Models\Pengaturan\User;
 use App\Models\Pengaturan\UserAuth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository
@@ -70,22 +69,16 @@ class UserRepository
         $user = $this->user->where('email', '=', $request->input('email'))->first();
         if (empty($user)) return false;
         if (!Hash::check($request->input('password'), $user->password)) return false;
-        $this->userAuth->create([
+        $user->auth = $this->userAuth->create([
             'user_id' => $user->id,
             'auth' => 'login',
             'token' => $request->input('_token'),
         ]);
-        Auth::login($user, $request->has('remember'));
         return $user;
     }
 
-    public function logout()
+    public function logout($token)
     {
-        $user = Auth::user();
-        if (!empty($user->last_login)) {
-            $this->userAuth->where('id', '=', $user->last_login->id)
-                ->update(['auth' => 'logout']);
-        }
-        Auth::logout();
+        $this->userAuth->where('token', '=', $token)->update(['auth' => 'logout']);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Pengaturan\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -23,7 +24,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $this->user->logout();
+        Auth::logout();
+        $this->user->logout(Session::get('token'));
         return redirect()->route('login');
     }
 
@@ -33,8 +35,10 @@ class AuthController extends Controller
             'email' => 'required|min:4|max:255',
             'password' => 'required|min:4|max:255',
         ]);
-        $auth = $this->user->login($request);
-        if ($auth == false) return redirect()->route('login');
+        $user = $this->user->login($request);
+        if ($user == false) return redirect()->route('login');
+        Auth::login($user, $request->has('remember'));
+        Session::put('token', $user->auth->token);
         return redirect()->route('home.dashboard');
     }
 }
