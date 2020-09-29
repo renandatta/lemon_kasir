@@ -54,6 +54,7 @@ class AuthController extends Controller
 
         $user_req = new Request($request->only('email', 'password'));
         $user_req->merge(['nama' => $request->input('nama_user')]);
+        $user_req->merge(['user_level_id' => env('USER_PROFIL')]);
         $user = $this->user->save($user_req);
 
         $user_profil_req = new Request();
@@ -69,7 +70,7 @@ class AuthController extends Controller
 
         $login_req = new Request($request->only('email', 'password'));
         $login_req->merge(['_token' => Str::random(32)]);
-        $user = $this->user->login(new Request($request->only(['email', 'password', '_token'])));
+        $user = $this->user->login($login_req);
         return response()->json(['success' => $user]);
     }
 }
