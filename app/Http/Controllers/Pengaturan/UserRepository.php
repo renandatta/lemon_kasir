@@ -79,6 +79,13 @@ class UserRepository
 
     public function logout($token)
     {
-        $this->userAuth->where('token', '=', $token)->update(['auth' => 'logout']);
+        $this->userAuth->where('token', $token)->update(['auth' => 'logout']);
+    }
+
+    public function cek_login($token)
+    {
+        return $this->userAuth->where('token', $token)
+            ->where('auth', 'login')
+            ->first();
     }
 }
