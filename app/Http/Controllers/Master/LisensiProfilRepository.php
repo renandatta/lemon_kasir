@@ -77,4 +77,9 @@ class LisensiProfilRepository
         $result->delete();
         return $result;
     }
+
+    public function nomor_otomatis()
+    {
+        return date('Y') . '/' . numberToRoman(date('n')) . '/' . date('d') . '/' . strval(mt_rand(111111, 999999));
+    }
 }
