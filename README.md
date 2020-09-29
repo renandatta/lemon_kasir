@@ -63,24 +63,6 @@
         </ul>
     </li>
     <li>
-        meja
-        <ul>
-            <li>/</li>
-            <li>/info</li>
-            <li>/save</li>
-            <li>/delete</li>
-        </ul>
-    </li>
-    <li>
-        produk_kategori
-        <ul>
-            <li>/</li>
-            <li>/info</li>
-            <li>/save</li>
-            <li>/delete</li>
-        </ul>
-    </li>
-    <li>
         produk
         <ul>
             <li>/</li>
