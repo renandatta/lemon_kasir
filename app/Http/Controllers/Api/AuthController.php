@@ -46,7 +46,7 @@ class AuthController extends Controller
             !$request->has('nama_profil') || !$request->has('notelp') ||
             !$request->has('alamat') || !$request->has('kota') ||
             !$request->has('email') || !$request->has('password') ||
-            !$request->has('nama_user') || !$request->has('lisensi_id') || !$request->has('harga')
+            !$request->has('nama_user') || !$request->has('harga')
         ) return abort(404);
 
         $profil_req = new Request($request->only('notelp', 'alamat', 'kota'));
@@ -63,8 +63,9 @@ class AuthController extends Controller
         $user_profil_req->merge(['user_id' => $user->id]);
         $this->userProfil->save($user_profil_req);
 
-        $lisensi_profil_req = new Request($request->only('lisensi_id', 'harga'));
+        $lisensi_profil_req = new Request($request->only('harga'));
         $lisensi_profil_req->merge(['profil_id' => $profil->id]);
+        $lisensi_profil_req->merge(['lisensi_id' => env('LISENSI')]);
         $lisensi_profil_req->merge(['no_lisensi' => $this->lisensiProfil->nomor_otomatis()]);
         $lisensi_profil_req->merge(['berlaku_dari' => date('Y-m-d')]);
         $this->lisensiProfil->save($lisensi_profil_req);
