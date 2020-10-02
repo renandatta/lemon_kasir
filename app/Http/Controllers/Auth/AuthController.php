@@ -36,10 +36,13 @@ class AuthController extends Controller
             'email' => 'required|min:4|max:255',
             'password' => 'required|min:4|max:255',
         ]);
-        $user = $this->auth->login_proses(new Request($request->only('email', 'password')));
-        if ($user == false) return redirect()->route('login');
+        $auth = $this->auth->login_proses(new Request($request->only('email', 'password')));
+        if ($auth == false) return redirect()->route('login');
+        $user = $this->user->find($auth->id);
         Auth::login($user, $request->has('remember'));
-        Session::put('token', $user->auth->token);
+        Session::put('token', $auth->auth->token);
+        if ($user->user_level_id == env('USER_PROFIL'))
+            return redirect()->route('home');
         return redirect()->route('home.dashboard');
     }
 

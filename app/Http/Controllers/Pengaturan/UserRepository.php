@@ -36,7 +36,7 @@ class UserRepository
 
     public function find($value, $column = 'id')
     {
-        return $this->user->where($column, '=', $value)->first();
+        return $this->user->where($column, $value)->first();
     }
 
     public function save(Request $request)

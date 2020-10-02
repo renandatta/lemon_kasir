@@ -26,9 +26,8 @@ class AuthRepository
 
     public function login_proses(Request $request)
     {
-        $user = $this->user->find($request->input('email'), 'email')->first();
+        $user = $this->user->find($request->input('email'), 'email');
         if (empty($user)) return false;
-        dd(Hash::check($request->input('password'), $user->password));
         if (!Hash::check($request->input('password'), $user->password)) return false;
         $user->auth = $this->userAuth->create([
             'user_id' => $user->id,
