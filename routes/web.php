@@ -32,7 +32,9 @@ Route::get('/', function () {
 Route::prefix('auth')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('register', [AuthController::class, 'register'])->name('register');
     Route::post('login', [AuthController::class, 'login_proses'])->name('login.proses');
+    Route::post('register', [AuthController::class, 'register_proses'])->name('register.proses');
 });
 
 Route::prefix('home')->group(function () {

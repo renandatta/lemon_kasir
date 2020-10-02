@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Pengaturan;
 
 use App\Models\Pengaturan\User;
-use App\Models\Pengaturan\UserAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
-    protected $user, $userAuth;
-    public function __construct(User $user, UserAuth $userAuth)
+    protected $user;
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->userAuth = $userAuth;
     }
 
     public function search_all(Request $request)
@@ -62,30 +60,5 @@ class UserRepository
         $result = $this->user->find($id);
         $result->delete();
         return $result;
-    }
-
-    public function login(Request $request)
-    {
-        $user = $this->user->where('email', '=', $request->input('email'))->first();
-        if (empty($user)) return false;
-        if (!Hash::check($request->input('password'), $user->password)) return false;
-        $user->auth = $this->userAuth->create([
-            'user_id' => $user->id,
-            'auth' => 'login',
-            'token' => $request->input('_token'),
-        ]);
-        return $user;
-    }
-
-    public function logout($token)
-    {
-        $this->userAuth->where('token', $token)->update(['auth' => 'logout']);
-    }
-
-    public function cek_login($token)
-    {
-        return $this->userAuth->where('token', $token)
-            ->where('auth', 'login')
-            ->first();
     }
 }

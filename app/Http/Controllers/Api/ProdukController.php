@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Auth\AuthRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Produk\ProdukRepository;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
-    protected $produk;
-    public function __construct(ProdukRepository $produk)
+    protected $auth, $produk;
+    public function __construct(AuthRepository $auth, ProdukRepository $produk)
     {
         $this->middleware('auth_api');
+        $this->auth = $auth;
         $this->produk = $produk;
     }
 
     public function search(Request $request)
     {
-        $profil = $this->user->cek_login($request->input('_token'))->user->user_profil->profil;
+        $profil = $this->auth->cek_login($request->input('_token'))->user->user_profil->profil;
         $request->merge(['profil_id' => $profil->id]);
         $produk = $this->produk->search($request);
         return response()->json(['success' => $produk]);

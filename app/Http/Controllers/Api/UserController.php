@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Auth\AuthRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Master\UserProfilRepository;
 use App\Http\Controllers\Pengaturan\UserRepository;
@@ -9,17 +10,18 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    protected $user, $userProfil;
-    public function __construct(UserRepository $user, UserProfilRepository $userProfil)
+    protected $user, $auth, $userProfil;
+    public function __construct(UserRepository $user, AuthRepository $auth, UserProfilRepository $userProfil)
     {
         $this->user = $user;
+        $this->auth = $auth;
         $this->userProfil = $userProfil;
         $this->middleware('auth_api');
     }
 
     public function search(Request $request)
     {
-        $profil = $this->user->cek_login($request->input('_token'))->user->user_profil->profil;
+        $profil = $this->auth->cek_login($request->input('_token'))->user->user_profil->profil;
         $request->merge(['profil_id' => $profil->id]);
         $user = $this->userProfil->search($request)->pluck('user');
         return response()->json(['success' => $user]);

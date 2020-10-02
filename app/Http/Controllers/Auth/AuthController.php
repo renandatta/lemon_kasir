@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    protected $user;
-    public function __construct(UserRepository $user)
+    protected $user, $auth;
+    public function __construct(UserRepository $user, AuthRepository $auth)
     {
         $this->user = $user;
+        $this->auth = $auth;
     }
 
     public function login()
@@ -25,7 +26,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        $this->user->logout(Session::get('token'));
+        $this->auth->logout(Session::get('token'));
         return redirect()->route('login');
     }
 
@@ -35,10 +36,32 @@ class AuthController extends Controller
             'email' => 'required|min:4|max:255',
             'password' => 'required|min:4|max:255',
         ]);
-        $user = $this->user->login($request);
+        $user = $this->auth->login_proses(new Request($request->only('email', 'password')));
         if ($user == false) return redirect()->route('login');
         Auth::login($user, $request->has('remember'));
         Session::put('token', $user->auth->token);
         return redirect()->route('home.dashboard');
+    }
+
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    public function register_proses(Request $request)
+    {
+        $request->validate([
+            'nama_profil' => 'required|min:4|max:255',
+            'notelp' => 'required|min:4|max:255',
+            'alamat' => 'required|min:4|max:255',
+            'kota' => 'required|min:4|max:255',
+            'nama_user' => 'required|min:4|max:255',
+            'email' => 'required|min:4|max:255',
+            'password' => 'required|min:4|max:255',
+        ]);
+        $user = $this->auth->register_proses($request);
+        Auth::login($user, $request->has('remember'));
+        Session::put('token', $user->auth->token);
+        return redirect()->route('/');
     }
 }
