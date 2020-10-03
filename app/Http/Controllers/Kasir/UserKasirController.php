@@ -70,7 +70,6 @@ class UserKasirController extends Controller
 
     public function save(Request $request)
     {
-        if (!$request->has('nama') || !$request->has('email')) return abort(404);
         $request->validate([
             'nama' => 'required|min:4|max:255',
             'email' => 'required|min:4|max:255',
