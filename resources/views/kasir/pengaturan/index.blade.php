@@ -20,14 +20,7 @@
 
         <div class="d-flex flex-column-fluid">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        @include('kasir.pengaturan._sidebar', ['sub_menu' => $sub_menu])
-                    </div>
-                    <div class="col-md-9">
-                        @yield('sub_content')
-                    </div>
-                </div>
+                @yield('sub_content')
             </div>
         </div>
     </div>

@@ -37,8 +37,7 @@ class PengaturanKasirController extends Controller
         ]);
 
         $profil = $this->profil->find(Auth::user()->user_profil->profil_id);
-        $sub_menu = $action = $this->additional_action(array());
-        return view('kasir.pengaturan.info', compact('breadcrumbs', 'profil', 'sub_menu'));
+        return view('kasir.pengaturan.info', compact('breadcrumbs', 'profil'));
     }
 
     public function edit()
