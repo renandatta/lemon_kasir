@@ -39,7 +39,6 @@
                                     @csrf
                                     @if(!empty($user_profil))
                                         <input type="hidden" name="id" value="{{ $user_profil->user_id }}">
-                                        <input type="hidden" name="id" value="{{ $user_profil->user_id }}">
                                     @endif
                                     <div class="row">
                                         <div class="col-md-6">
