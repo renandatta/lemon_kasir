@@ -42,7 +42,7 @@ class AuthController extends Controller
         Auth::login($user, $request->has('remember'));
         Session::put('token', $auth->auth->token);
         if ($user->user_level_id == env('USER_PROFIL'))
-            return redirect()->route('home');
+            return redirect()->route('kasir.dashboard');
         return redirect()->route('home.dashboard');
     }
 
