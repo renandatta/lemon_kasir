@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Kasir\DashboardKasirController;
 use App\Http\Controllers\Kasir\PengaturanKasirController;
+use App\Http\Controllers\Kasir\UserKasirController;
 use App\Http\Controllers\Master\LisensiController;
 use App\Http\Controllers\Master\LisensiProfilController;
 use App\Http\Controllers\Master\ProfilController;
@@ -121,5 +122,13 @@ Route::prefix('kasir')->group(function () {
         Route::get('/', [PengaturanKasirController::class, 'index'])->name('kasir.pengaturan');
         Route::get('edit', [PengaturanKasirController::class, 'edit'])->name('kasir.pengaturan.edit');
         Route::post('save', [PengaturanKasirController::class, 'save'])->name('kasir.pengaturan.save');
+    });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserKasirController::class, 'index'])->name('kasir.user');
+        Route::get('info', [UserKasirController::class, 'info'])->name('kasir.user.info');
+        Route::post('search', [UserKasirController::class, 'search'])->name('kasir.user.search');
+        Route::post('save', [UserKasirController::class, 'save'])->name('kasir.user.save');
+        Route::post('delete', [UserKasirController::class, 'save'])->name('kasir.user.delete');
     });
 });
