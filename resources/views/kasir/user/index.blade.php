@@ -44,7 +44,7 @@
 @push('scripts')
     <script>
         let $data_user = $('#data_user');
-
+        $data_user.html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-fw"></i> Loading</div>');
         $.post('{{ route('kasir.user.search') }}', {
             _token: '{{ csrf_token() }}'
         }, (result) => {
