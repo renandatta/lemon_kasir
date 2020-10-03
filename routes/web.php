@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Kasir\DashboardKasirController;
+use App\Http\Controllers\Kasir\PengaturanKasirController;
 use App\Http\Controllers\Master\LisensiController;
 use App\Http\Controllers\Master\LisensiProfilController;
 use App\Http\Controllers\Master\ProfilController;
@@ -115,4 +116,10 @@ Route::prefix('master')->group(function () {
 
 Route::prefix('kasir')->group(function () {
     Route::get('dashboard', [DashboardKasirController::class, 'index'])->name('kasir.dashboard');
+
+    Route::prefix('pengaturan')->group(function () {
+        Route::get('/', [PengaturanKasirController::class, 'index'])->name('kasir.pengaturan');
+        Route::get('edit', [PengaturanKasirController::class, 'edit'])->name('kasir.pengaturan.edit');
+        Route::post('save', [PengaturanKasirController::class, 'save'])->name('kasir.pengaturan.save');
+    });
 });
