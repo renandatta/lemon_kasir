@@ -35,6 +35,7 @@ class FiturProgramRepository
         $data = $this->fiturProgram
             ->select('id', 'nama as text', 'kode', 'parent_kode', 'url', 'icon as menu_icon')
             ->where('parent_kode', 'like', ($parent_kode == '#' ? '' : $parent_kode). '%')
+            ->orderBy('kode')
             ->get();
         if (count($data) > 0) {
             $result = $this->get_children_from_array($data, $parent_kode, $fitur_id_akses);
@@ -115,30 +116,30 @@ class FiturProgramRepository
             $temp_kode = mt_rand(111,999);
 
             //=====tujuan pindah ke temp
-            $this->fiturProgram->where('kode', '=', $kode_tujuan)->update(['kode' => $temp_kode]);
-            $sub = $this->fiturProgram->where('parent_kode', '=', $kode_tujuan)->count();
+            $this->fiturProgram->where('kode', $kode_tujuan)->update(['kode' => $temp_kode]);
+            $sub = $this->fiturProgram->where('parent_kode', $kode_tujuan)->count();
             if ($sub > 0)
-                $this->fiturProgram->where('parent_kode', '=', $kode_tujuan)
+                $this->fiturProgram->where('parent_kode', $kode_tujuan)
                     ->update([
                         'kode' => DB::raw("replace(kode, parent_kode, '". $temp_kode ."')"),
                         'parent_kode' => $temp_kode
                     ]);
 
             //=====asal pindah ke tujuan
-            $this->fiturProgram->where('kode', '=', $kode_asal)->update(['kode' => $kode_tujuan]);
-            $sub = $this->fiturProgram->where('parent_kode', '=', $kode_asal)->count();
+            $this->fiturProgram->where('kode', $kode_asal)->update(['kode' => $kode_tujuan]);
+            $sub = $this->fiturProgram->where('parent_kode', $kode_asal)->count();
             if ($sub > 0)
-                $this->fiturProgram->where('parent_kode', '=', $kode_asal)
+                $this->fiturProgram->where('parent_kode', $kode_asal)
                     ->update([
                         'kode' => DB::raw("replace(kode, parent_kode, '". $kode_tujuan ."')"),
                         'parent_kode' => $kode_tujuan
                     ]);
 
             //=====temp pindah ke asal
-            $this->fiturProgram->where('kode', '=', $temp_kode)->update(['kode' => $kode_asal]);
-            $sub = $this->fiturProgram->where('parent_kode', '=', $temp_kode)->count();
+            $this->fiturProgram->where('kode', (string) $temp_kode)->update(['kode' => (string) $kode_asal]);
+            $sub = $this->fiturProgram->where('parent_kode', $temp_kode)->count();
             if ($sub > 0)
-                $this->fiturProgram->where('parent_kode', '=', $temp_kode)
+                $this->fiturProgram->where('parent_kode', $temp_kode)
                     ->update([
                         'kode' => DB::raw("replace(kode, parent_kode, '". $kode_asal ."')"),
                         'parent_kode' => $kode_asal
