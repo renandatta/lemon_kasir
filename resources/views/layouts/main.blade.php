@@ -79,7 +79,7 @@
                         @foreach($fitur_program as $key => $fitur)
                             @if($fitur->flag_akses == true)
                                 <div class="tab-pane {{ $fitur->text == $modul_aktif ? 'show active' : 'fade' }}" id="kt_aside_tab_{{ $key }}">
-                                    <div class="aside-menu-wrapper flex-column-fluid px-10 py-5">
+                                    <div class="aside-menu-wrapper flex-column-fluid px-sm-10 px-3 py-5">
                                         <div class="aside-menu min-h-lg-800px" data-menu-vertical="1" data-menu-scroll="1">
                                             <ul class="menu-nav">
                                                 @foreach($fitur->children as $menu)
