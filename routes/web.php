@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
+use App\Http\Controllers\Kasir\DashboardKasirController;
 use App\Http\Controllers\Master\LisensiController;
 use App\Http\Controllers\Master\LisensiProfilController;
 use App\Http\Controllers\Master\ProfilController;
@@ -110,4 +111,8 @@ Route::prefix('master')->group(function () {
         });
     });
 
+});
+
+Route::prefix('kasir')->group(function () {
+    Route::get('dashboard', [DashboardKasirController::class, 'index'])->name('kasir.dashboard');
 });
