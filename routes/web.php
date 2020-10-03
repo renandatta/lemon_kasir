@@ -5,6 +5,7 @@ use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Kasir\DashboardKasirController;
 use App\Http\Controllers\Kasir\LisensiKasirController;
 use App\Http\Controllers\Kasir\PengaturanKasirController;
+use App\Http\Controllers\Kasir\ProdukKasirController;
 use App\Http\Controllers\Kasir\UserKasirController;
 use App\Http\Controllers\Master\LisensiController;
 use App\Http\Controllers\Master\LisensiProfilController;
@@ -134,4 +135,12 @@ Route::prefix('kasir')->group(function () {
     });
 
     Route::get('lisensi', [LisensiKasirController::class, 'index'])->name('kasir.lisensi');
+
+    Route::prefix('produk')->group(function () {
+        Route::get('/', [ProdukKasirController::class, 'index'])->name('kasir.produk');
+        Route::get('info', [ProdukKasirController::class, 'info'])->name('kasir.produk.info');
+        Route::post('search', [ProdukKasirController::class, 'search'])->name('kasir.produk.search');
+        Route::post('save', [ProdukKasirController::class, 'save'])->name('kasir.produk.save');
+        Route::post('delete', [ProdukKasirController::class, 'save'])->name('kasir.produk.delete');
+    });
 });

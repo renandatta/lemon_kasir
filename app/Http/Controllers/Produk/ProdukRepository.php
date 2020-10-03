@@ -15,7 +15,7 @@ class ProdukRepository
 
     public function search(Request $request)
     {
-        $produk = $this->produk;
+        $produk = $this->produk->orderBy('id', 'desc');
 
         $nama = $request->input('nama') ?? '';
         if ($nama != '')
