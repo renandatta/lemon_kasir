@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Kasir\DashboardKasirController;
+use App\Http\Controllers\Kasir\LisensiKasirController;
 use App\Http\Controllers\Kasir\PengaturanKasirController;
 use App\Http\Controllers\Kasir\UserKasirController;
 use App\Http\Controllers\Master\LisensiController;
@@ -131,4 +132,6 @@ Route::prefix('kasir')->group(function () {
         Route::post('save', [UserKasirController::class, 'save'])->name('kasir.user.save');
         Route::post('delete', [UserKasirController::class, 'save'])->name('kasir.user.delete');
     });
+
+    Route::get('lisensi', [LisensiKasirController::class, 'index'])->name('kasir.lisensi');
 });
