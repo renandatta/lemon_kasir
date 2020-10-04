@@ -51,11 +51,13 @@
                     window.location.href = "{{ route('home.dashboard') }}";
                 }, 1000);
                 @endif
-            @elseauth()
+            @endauth
+
+            @guest
             setTimeout(function () {
                 window.location.href = "{{ route('login') }}";
             }, 1000);
-            @endauth
+            @endguest
         </script>
     </body>
 </html>
