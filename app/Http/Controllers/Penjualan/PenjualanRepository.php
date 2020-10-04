@@ -17,7 +17,7 @@ class PenjualanRepository
 
     public function search(Request $request)
     {
-        $penjualan = $this->penjualan;
+        $penjualan = $this->penjualan->orderBy('id', 'desc');
 
         $profil_id = $request->input('profil_id') ?? '';
         if ($profil_id != '') $penjualan = $penjualan->where('profil_id', $profil_id);
@@ -27,6 +27,9 @@ class PenjualanRepository
 
         $tanggal = $request->input('tanggal') ?? '';
         if ($tanggal != '') $penjualan = $penjualan->whereDate('created_at', $tanggal);
+
+        $is_bayar = $request->input('is_bayar') ?? '';
+        if ($is_bayar != '') $penjualan = $penjualan->where('is_bayar', $is_bayar);
 
         if ($request->has('paginate')) return $penjualan->paginate($request->input('paginate'));
         return $penjualan->get();
@@ -76,16 +79,17 @@ class PenjualanRepository
 
     public function save(Request $request)
     {
-        return $this->penjualan->save($request->only('profil_id', 'no_penjualan'));
+        return $this->penjualan->create($request->only('profil_id', 'no_penjualan'));
     }
 
     public function save_detail(Request $request)
     {
-        if ($request->has('id')) {
-            $detail = $this->detailPenjualan->save($request->only('penjualan_id', 'produk_id', 'jumlah', 'harga'));
+        if (!$request->has('id')) {
+            $request->merge(['jumlah' => 1]);
+            $detail = $this->detailPenjualan->create($request->only('penjualan_id', 'produk_id', 'jumlah', 'harga'));
         } else {
             $detail = $this->detailPenjualan->find($request->input('id'));
-            $detail->update($request->only('jumlah'));
+            $detail->update($request->all());
         }
         return $detail;
     }
@@ -100,7 +104,11 @@ class PenjualanRepository
     public function delete_detail($id)
     {
         $detail = $this->detailPenjualan->find($id);
-        $detail->delete();
+        $detail->jumlah--;
+        if ($detail->jumlah <= 0)
+            $detail->delete();
+        else
+            $detail->save();
         return $detail;
     }
 

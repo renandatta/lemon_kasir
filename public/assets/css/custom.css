@@ -7,3 +7,26 @@
 input.autonumeric {
     text-align: right;
 }
+.btn.btn-icon-sm.btn-sm, .btn-group-sm > .btn.btn-icon-sm {
+    height: calc(0.5em + 1.1rem + 2px);
+    width: calc(0.5em + 1.1rem + 2px);
+}
+.ripple {
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(254, 206, 52, 0.93);
+    transform: scale(0);
+    position: absolute;
+    opacity: 1;
+}
+.rippleEffect {
+    animation: rippleDrop .3s linear;
+}
+
+@keyframes rippleDrop {
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}

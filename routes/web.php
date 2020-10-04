@@ -5,6 +5,7 @@ use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Kasir\DashboardKasirController;
 use App\Http\Controllers\Kasir\LisensiKasirController;
 use App\Http\Controllers\Kasir\PengaturanKasirController;
+use App\Http\Controllers\Kasir\PenjualanKasirController;
 use App\Http\Controllers\Kasir\ProdukKasirController;
 use App\Http\Controllers\Kasir\UserKasirController;
 use App\Http\Controllers\Master\LisensiController;
@@ -142,5 +143,18 @@ Route::prefix('kasir')->group(function () {
         Route::post('search', [ProdukKasirController::class, 'search'])->name('kasir.produk.search');
         Route::post('save', [ProdukKasirController::class, 'save'])->name('kasir.produk.save');
         Route::post('delete', [ProdukKasirController::class, 'save'])->name('kasir.produk.delete');
+    });
+
+    Route::prefix('penjualan')->group(function () {
+        Route::get('/', [PenjualanKasirController::class, 'index'])->name('kasir.penjualan');
+        Route::post('search', [PenjualanKasirController::class, 'search'])->name('kasir.penjualan.search');
+        Route::post('new', [PenjualanKasirController::class, 'new'])->name('kasir.penjualan.new');
+        Route::post('delete', [PenjualanKasirController::class, 'delete'])->name('kasir.penjualan.delete');
+
+        Route::prefix('detail')->group(function () {
+            Route::post('save', [PenjualanKasirController::class, 'save_detail'])->name('kasir.penjualan.detail.save');
+            Route::post('update', [PenjualanKasirController::class, 'update_detail'])->name('kasir.penjualan.detail.update');
+            Route::post('delete', [PenjualanKasirController::class, 'delete_detail'])->name('kasir.penjualan.detail.delete');
+        });
     });
 });

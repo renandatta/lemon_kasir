@@ -63,7 +63,8 @@ class ProdukKasirController extends Controller
         $produk = $this->produk->search($request);
         if ($request->has('ajax')) return $produk;
         $action = array('edit');
-        return view('kasir.produk._table', compact('produk', 'action'));
+        $view = $request->input('view') ?? 'produk._table';
+        return view('kasir.' . $view, compact('produk', 'action'));
     }
 
     public function save(Request $request)

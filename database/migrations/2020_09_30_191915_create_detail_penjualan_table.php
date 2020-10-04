@@ -17,7 +17,7 @@ class CreateDetailPenjualanTable extends Migration
             $table->id();
             $table->unsignedBigInteger('penjualan_id');
             $table->unsignedBigInteger('produk_id');
-            $table->integer('jumlah')->default(1);
+            $table->integer('jumlah')->default(0);
             $table->double('harga')->default(0);
             $table->timestamps();
             $table->softDeletes();
