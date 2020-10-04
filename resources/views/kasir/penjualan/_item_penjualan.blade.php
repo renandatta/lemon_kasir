@@ -25,6 +25,5 @@
     </div>
     <div class="card-footer p-2" id="panel_footer_penjualan_{{ $id }}">
         <button type="button" class="btn btn-danger btn-sm py-2 px-5 float-right" onclick="hapus_penjualan({{ $id }})">Batal & Hapus Transaksi</button>
-        <button type="button" class="btn btn-secondary btn-sm py-2 px-5" onclick="toggle_panel_penjualan({{ $id }})">Tutup Sementara</button>
     </div>
 </div>
