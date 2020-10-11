@@ -188,6 +188,26 @@
             $('#dibayar_penjualan').html(dibayar === '' ? '0' : add_commas(dibayar));
             $('#kembali_penjualan').html(kembali === '' ? '0' : add_commas(kembali));
         }
+        function selesai_bayar() {
+            let kembali = parseInt(remove_commas($('#kembali_penjualan').html()));
+            if (kembali <= 0) {
+                swal.fire("Pembayaran kurang !");
+            } else {
+                $.post("{{ route('kasir.penjualan.bayar') }}", {
+                    _token: '{{ csrf_token() }}',
+                    ajax: 1,
+                    id: selectedId,
+                    total: $('#total_harga_penjualan').html(),
+                    dibayar: $('#dibayar_penjualan').html()
+                }, (result) => {
+                    tutup_pembayaran();
+                    $('#panel_penjualan_' + result.id).remove();
+                    swal.fire("Pembayaran selesai !");
+                }).fail((xhr) => {
+                    console.log(xhr.responseText);
+                });
+            }
+        }
 
         // penjualan detail
         function toggle_panel_penjualan(id) {
