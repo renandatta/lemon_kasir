@@ -36,6 +36,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="card card-custom mt-5 card-produk shadow-sm" id="panel_pembayaran" style="display: none;">
+                    <div class="card-header p-0">
+                        <p class="mb-0 mt-2 ml-3" style="line-height: 10px">Pembayaran<br><small>Bayar dan selesaikan transaksi</small></p>
+                        <button type="button" class="btn btn-link btn-icon btn-sm p-0 ml-auto" onclick="tutup_pembayaran()">
+                            <span class="svg-icon svg-icon-danger"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000"> <rect x="0" y="7" width="16" height="2" rx="1"/> <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/> </g> </g> </svg></span>
+                        </button>
+                    </div>
+                    <div class="card-body p-2 px-4" style="overflow-y: scroll;">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,7 +62,8 @@
             $button_penjualan_baru = $('#button_penjualan_baru'),
             $panel_penjualan_baru = $('#panel_penjualan_baru'),
             $panel_data_produk = $('#panel_data_produk'),
-            $list_data_produk = $('#list_data_produk');
+            $list_data_produk = $('#list_data_produk'),
+            $panel_pembayaran = $('#panel_pembayaran');
 
         let selectedId = '';
 
@@ -99,6 +111,22 @@
                     });
                 }
             })
+        }
+        function bayar_penjualan(id) {
+            let $selected_item = $('#panel_penjualan_' + id);
+            selectedId = id;
+            $button_penjualan_baru.hide();
+            $('.item_penjualan').hide();
+            $selected_item.show();
+
+            pembayaran_height();
+            $panel_data_produk.hide();
+            $panel_pembayaran.show();
+        }
+        function tutup_pembayaran() {
+            $('.item_penjualan').show();
+            $button_penjualan_baru.show();
+            $panel_pembayaran.hide();
         }
 
         // penjualan detail
@@ -179,6 +207,11 @@
             });
         }
         search_produk();
+
+        function pembayaran_height() {
+            let $selected_item = $('#panel_penjualan_' + selectedId);
+            $panel_pembayaran.height($(window).height() - 80 - $selected_item.outerHeight());
+        }
     </script>
 
 @endpush

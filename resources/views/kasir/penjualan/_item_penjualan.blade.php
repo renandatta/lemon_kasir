@@ -5,7 +5,7 @@
 <div class="card card-custom mt-5 item_penjualan" id="panel_penjualan_{{ $id }}">
     <div class="card-header py-2 px-4" onclick="toggle_panel_penjualan({{ $id }})">
         <b id="no_penjualan_{{ $id }}">#{{ $id }}</b>
-        <b class="float-right" id="ringkasan_penjualan_{{ $id }}">-</b>
+        <b class="float-right" id="toggle_icon_penjualan_{{ $id }}">-</b>
     </div>
     <div class="card-body p-2 px-4 card-item-penjualan" id="panel_body_penjualan_{{ $id }}" onclick="tampilkan_produk({{ $id }})">
         <table class="table table-sm mb-0">
@@ -24,6 +24,7 @@
         </table>
     </div>
     <div class="card-footer p-2" id="panel_footer_penjualan_{{ $id }}">
-        <button type="button" class="btn btn-danger btn-sm py-2 px-5 float-right" onclick="hapus_penjualan({{ $id }})">Batal & Hapus Transaksi</button>
+        <button type="button" class="btn btn-success btn-sm py-2 px-2 float-left" onclick="bayar_penjualan({{ $id }})">Pembayaran</button>
+        <button type="button" class="btn btn-danger btn-sm py-2 px-2 float-right" onclick="hapus_penjualan({{ $id }})">Batal & Hapus Transaksi</button>
     </div>
 </div>
