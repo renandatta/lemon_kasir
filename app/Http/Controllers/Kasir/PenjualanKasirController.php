@@ -58,6 +58,25 @@ class PenjualanKasirController extends Controller
         return $this->penjualan->delete($request->input('id'));
     }
 
+    public function total(Request $request)
+    {
+        if (!$request->has('id')) return abort(404);
+        $request->merge(['penjualan_id' => $request->input('id')]);
+        $detail = $this->penjualan->search_detail(new Request($request->only('penjualan_id')));
+        return $detail->sum('total_harga');
+    }
+
+    public function bayar(Request $request)
+    {
+        if (!$request->has('id')) return abort(404);
+        $request->merge(['total' => unformat_number($request->input('total'))]);
+        $request->merge(['dibayar' => unformat_number($request->input('dibayar'))]);
+        $penjualan = $this->penjualan->bayar($request);
+        if ($request->has('ajax')) return $penjualan;
+        return redirect()->route('kasir.penjualan')
+            ->with('success', 'Penjualan selesai');
+    }
+
     public function save_detail(Request $request)
     {
         if (!$request->has('penjualan_id') || !$request->has('produk_id')) return abort(404);

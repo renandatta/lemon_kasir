@@ -116,4 +116,14 @@ class PenjualanRepository
     {
         return date('Y') . '/' . numberToRoman(date('n')) . '/' . date('d') . '/' . strval(mt_rand(111111, 999999));
     }
+
+    public function bayar(Request $request)
+    {
+        $penjualan = $this->penjualan->find($request->input('id'));
+        $penjualan->total = $request->input('total');
+        $penjualan->dibayar = $request->input('dibayar');
+        $penjualan->tanggal_waktu_bayar = date('Y-m-d H:i:s');
+        $penjualan->save();
+        return $penjualan;
+    }
 }

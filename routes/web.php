@@ -150,6 +150,8 @@ Route::prefix('kasir')->group(function () {
         Route::post('search', [PenjualanKasirController::class, 'search'])->name('kasir.penjualan.search');
         Route::post('new', [PenjualanKasirController::class, 'new'])->name('kasir.penjualan.new');
         Route::post('delete', [PenjualanKasirController::class, 'delete'])->name('kasir.penjualan.delete');
+        Route::post('total', [PenjualanKasirController::class, 'total'])->name('kasir.penjualan.total');
+        Route::post('bayar', [PenjualanKasirController::class, 'bayar'])->name('kasir.penjualan.bayar');
 
         Route::prefix('detail')->group(function () {
             Route::post('save', [PenjualanKasirController::class, 'save_detail'])->name('kasir.penjualan.detail.save');

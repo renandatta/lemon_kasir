@@ -11,6 +11,11 @@
             position: sticky;
             bottom: 0;
         }
+        .card-pembayaran {
+            min-height: 320px;
+            position: sticky;
+            bottom: 0;
+        }
     </style>
 @endpush
 
@@ -36,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-custom mt-5 card-produk shadow-sm" id="panel_pembayaran" style="display: none;">
+                <div class="card card-custom mt-5 card-pembayaran shadow-sm" id="panel_pembayaran" style="display: none;">
                     <div class="card-header p-0">
                         <p class="mb-0 mt-2 ml-3" style="line-height: 10px">Pembayaran<br><small>Bayar dan selesaikan transaksi</small></p>
                         <button type="button" class="btn btn-link btn-icon btn-sm p-0 ml-auto" onclick="tutup_pembayaran()">
@@ -44,7 +49,34 @@
                         </button>
                     </div>
                     <div class="card-body p-2 px-4" style="overflow-y: scroll;">
-
+                        <table class="table table-borderless table-sm">
+                            <tr><td class="p-0 font-size-h2">Total</td><td class="p-0 text-right font-size-h2" id="total_harga_penjualan">0</td></tr>
+                            <tr><td class="p-0 font-size-h2">Dibayar</td><td class="p-0 text-right font-size-h2" id="dibayar_penjualan">0</td></tr>
+                            <tr><td class="p-0 font-size-h2">Kembali</td><td class="p-0 text-right font-size-h2" id="kembali_penjualan">0</td></tr>
+                        </table>
+                        <table class="table table-borderless table-sm">
+                            <tr>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('7')">7</button></td>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('8')">8</button></td>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('9')">9</button></td>
+                                <td><button class="btn btn-block btn-danger font-size-h2 py-0" onclick="tombol_pembayaran('c')"><i class="fa fa-times-circle"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('4')">4</button></td>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('5')">5</button></td>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('6')">6</button></td>
+                                <td><button class="btn btn-block btn-danger font-size-h2 py-0" onclick="tombol_pembayaran('bcs')"><i class="fa fa-backspace"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('1')">1</button></td>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('2')">2</button></td>
+                                <td><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('3')">3</button></td>
+                                <td rowspan="2"><button class="btn btn-block btn-success font-size-h2 py-0 h-75px" onclick="selesai_bayar()"><i class="fa fa-check-circle font-size-h1"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><button class="btn btn-block btn-primary font-size-h2 py-0" onclick="tombol_pembayaran('0')">0</button></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -65,7 +97,7 @@
             $list_data_produk = $('#list_data_produk'),
             $panel_pembayaran = $('#panel_pembayaran');
 
-        let selectedId = '';
+        let selectedId = '', dibayar = '';
 
         // penjualan
         function search_penjualan() {
@@ -122,11 +154,39 @@
             pembayaran_height();
             $panel_data_produk.hide();
             $panel_pembayaran.show();
+
+            let $total_harga_penjualan = $('#total_harga_penjualan');
+            $total_harga_penjualan.html('<i class="fa fa-spinner fa-spin"></i>')
+            dibayar = '';
+            $.post("{{ route('kasir.penjualan.total') }}", {
+                _token: '{{ csrf_token() }}', id
+            }, (result) => {
+                $total_harga_penjualan.html(add_commas(result));
+            }).fail((xhr) => {
+                console.log(xhr.responseText);
+            });
         }
         function tutup_pembayaran() {
             $('.item_penjualan').show();
             $button_penjualan_baru.show();
             $panel_pembayaran.hide();
+        }
+        function tombol_pembayaran(tombol) {
+            switch (tombol) {
+                case 'c' :
+                    dibayar = '';
+                    break;
+                case 'bcs' :
+                    dibayar = dibayar.substr(0, dibayar.length-1);
+                    break;
+                default :
+                    dibayar += tombol;
+                    break;
+            }
+            let total = $('#total_harga_penjualan').html();
+            let kembali = parseInt(remove_commas(dibayar)) - parseInt(remove_commas(total));
+            $('#dibayar_penjualan').html(dibayar === '' ? '0' : add_commas(dibayar));
+            $('#kembali_penjualan').html(kembali === '' ? '0' : add_commas(kembali));
         }
 
         // penjualan detail
@@ -154,7 +214,7 @@
                 id: detail.id
             }, (result) => {
                 $('#jumlah_detail_penjualan_' + result.id).html(result.jumlah);
-                $('#total_detail_penjualan_' + result.id).html(result.total_harga);
+                $('#total_detail_penjualan_' + result.id).html(add_commas(result.total_harga));
             }).fail((xhr) => {
                 console.log(xhr.responseText);
             });
@@ -169,7 +229,7 @@
                     $('#row_detail_penjualan_' + result.id).remove();
                 } else {
                     $('#jumlah_detail_penjualan_' + result.id).html(result.jumlah);
-                    $('#total_detail_penjualan_' + result.id).html(result.total_harga);
+                    $('#total_detail_penjualan_' + result.id).html(add_commas(result.total_harga));
                 }
             }).fail((xhr) => {
                 console.log(xhr.responseText);
@@ -186,6 +246,7 @@
 
             produk_height();
             $panel_data_produk.show();
+            $panel_pembayaran.hide();
         }
         function produk_height() {
             let $selected_item = $('#panel_penjualan_' + selectedId);
