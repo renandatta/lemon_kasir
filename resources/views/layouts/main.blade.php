@@ -12,8 +12,16 @@
 <head>
     <meta charset="utf-8" />
     <title>@yield('title'){{ env('APP_NAME') }}</title>
-    <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <meta name="title"                     content="Lemon Kasir" />
+    <meta name="description"               content="Aplikasi Kasir Minimalis dan Gratis" />
+    <meta property="og:image"              content="{{ asset('lemon.png') }}">
+    <meta property="og:image:type"         content="image/png">
+    <meta property="og:url"                content="{{ route('/') }}" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Lemon Kasir" />
+    <meta property="og:description"        content="Aplikasi Kasir Minimalis dan Gratis" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 

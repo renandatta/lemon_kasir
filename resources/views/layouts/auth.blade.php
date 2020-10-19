@@ -3,7 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <title>@yield('title'){{ env('APP_NAME') }}</title>
-    <meta name="description" content="Login page example" />
+
+    <meta name="title"                     content="Lemon Kasir" />
+    <meta name="description"               content="Aplikasi Kasir Minimalis dan Gratis" />
+    <meta property="og:image"              content="{{ asset('lemon.png') }}">
+    <meta property="og:image:type"         content="image/png">
+    <meta property="og:url"                content="{{ route('/') }}" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Lemon Kasir" />
+    <meta property="og:description"        content="Aplikasi Kasir Minimalis dan Gratis" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link href="{{ asset('assets/css/pages/login/login-2.css?v=7.1.0') }}" rel="stylesheet" type="text/css" />

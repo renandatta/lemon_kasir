@@ -4,6 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ env('APP_NAME') }}</title>
+        <meta name="title"                     content="Lemon Kasir" />
+        <meta name="description"               content="Aplikasi Kasir Minimalis dan Gratis" />
+        <meta property="og:image"              content="{{ asset('lemon.png') }}">
+        <meta property="og:image:type"         content="image/png">
+        <meta property="og:url"                content="{{ route('/') }}" />
+        <meta property="og:type"               content="article" />
+        <meta property="og:title"              content="Lemon Kasir" />
+        <meta property="og:description"        content="Aplikasi Kasir Minimalis dan Gratis" />
         <link href="{{ asset('assets/plugins/global/plugins.bundle.css?v=7.1.0') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.1.0') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/style.bundle.css?v=7.1.0') }}" rel="stylesheet" type="text/css" />
