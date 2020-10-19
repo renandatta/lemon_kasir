@@ -16,7 +16,7 @@ class UpdatePenjualanTableAddPembayaran extends Migration
         Schema::table('penjualan', function (Blueprint $table) {
             $table->double('total')->nullable();
             $table->double('dibayar')->nullable();
-            $table->date('tanggal_waktu_dibayar')->nullable();
+            $table->dateTime('tanggal_waktu_dibayar')->nullable();
         });
     }
 
