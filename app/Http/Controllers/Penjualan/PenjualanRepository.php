@@ -28,6 +28,9 @@ class PenjualanRepository
         $tanggal = $request->input('tanggal') ?? '';
         if ($tanggal != '') $penjualan = $penjualan->whereDate('created_at', $tanggal);
 
+        $tanggal = $request->input('tanggal_dibayar') ?? '';
+        if ($tanggal != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', $tanggal);
+
         $is_bayar = $request->input('is_bayar') ?? '';
         if ($is_bayar != '') $penjualan = $penjualan->where('is_bayar', $is_bayar);
 
