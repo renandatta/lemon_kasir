@@ -86,6 +86,9 @@ class ProdukKasirController extends Controller
     {
         if (!$request->has('id')) return abort(404);
         $produk = $this->produk->delete($request->input('id'));
+        if ($produk == false)
+            return redirect()->route('kasir.produk')
+                ->with('error', 'Produk tidak dapat dihapus');
         if ($request->has('ajax')) return $produk;
         return redirect()->route('kasir.produk')
             ->with('success', 'Produk berhasil dihapus');

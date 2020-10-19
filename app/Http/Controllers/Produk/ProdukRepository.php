@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Produk;
 
+use App\Models\Penjualan\DetailPenjualan;
 use App\Models\Produk\Produk;
 use Illuminate\Http\Request;
 
 class ProdukRepository
 {
-    protected $produk;
-    public function __construct(Produk $produk)
+    protected $produk, $detailPenjualan;
+    public function __construct(Produk $produk, DetailPenjualan $detailPenjualan)
     {
         $this->produk = $produk;
+        $this->detailPenjualan = $detailPenjualan;
     }
 
     public function search(Request $request)
@@ -60,6 +62,7 @@ class ProdukRepository
 
     public function delete($id)
     {
+        if ($this->detailPenjualan->where('produk_id', $id)->count() > 0) return false;
         $result = $this->produk->find($id);
         $result->delete();
         return $result;

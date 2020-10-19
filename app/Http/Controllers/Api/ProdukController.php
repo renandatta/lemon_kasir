@@ -43,6 +43,8 @@ class ProdukController extends Controller
     {
         if (!$request->has('id')) return abort(404);
         $produk = $this->produk->delete($request->input('id'));
+        if ($produk == false)
+            return response()->json(['error' => 'Produk tidak dapat dihapus']);
         return response()->json(['success' => $produk]);
     }
 }
