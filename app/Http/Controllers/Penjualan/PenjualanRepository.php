@@ -27,16 +27,16 @@ class PenjualanRepository
         if ($no_penjualan != '') $penjualan = $penjualan->where('no_penjualan', $no_penjualan);
 
         $tanggal = $request->input('tanggal') ?? '';
-        if ($tanggal != '') $penjualan = $penjualan->whereDate('created_at', $tanggal);
+        if ($tanggal != '') $penjualan = $penjualan->whereDate('created_at', unformat_date($tanggal));
 
         $tanggal = $request->input('tanggal_dibayar') ?? '';
-        if ($tanggal != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', $tanggal);
+        if ($tanggal != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', unformat_date($tanggal));
 
         $tanggal_dari = $request->input('tanggal_dari') ?? '';
-        if ($tanggal_dari != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', '>=', $tanggal_dari);
+        if ($tanggal_dari != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', '<=', unformat_date($tanggal_dari));
 
         $tanggal_sampai = $request->input('tanggal_sampai') ?? '';
-        if ($tanggal_sampai != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', '<=', $tanggal_sampai);
+        if ($tanggal_sampai != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', '>=', unformat_date($tanggal_sampai));
 
         $is_bayar = $request->input('is_bayar') ?? '';
         if ($is_bayar != '') $penjualan = $penjualan->where('is_bayar', $is_bayar);
@@ -48,7 +48,14 @@ class PenjualanRepository
     public function search_detail(Request $request)
     {
         $detail = $this->detailPenjualan->select('detail_penjualan.*')
-            ->join('penjualan', 'penjualan.id', '=', 'detail_penjualan.penjualan_id');
+            ->join('penjualan', 'penjualan.id', '=', 'detail_penjualan.penjualan_id')
+            ->with(['produk']);
+
+        $profil_id = $request->input('profil_id') ?? '';
+        if ($profil_id != '') $detail = $detail->where('penjualan.profil_id', $profil_id);
+
+        $is_bayar = $request->input('is_bayar') ?? '';
+        if ($is_bayar != '') $detail = $detail->where('penjualan.is_bayar', $is_bayar);
 
         $penjualan_id = $request->input('penjualan_id') ?? '';
         if ($penjualan_id != '') $detail = $detail->where('penjualan_id', $penjualan_id);
@@ -60,7 +67,7 @@ class PenjualanRepository
         if ($jumlah != '') $detail = $detail->where('jumlah', $jumlah);
 
         $tanggal = $request->input('tanggal') ?? '';
-        if ($tanggal != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', $tanggal);
+        if ($tanggal != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', unformat_date($tanggal));
 
         $jumlah_dari = $request->input('jumlah_dari') ?? '';
         if ($jumlah_dari != '') $detail = $detail->where('jumlah', '>=', $jumlah_dari);
@@ -69,18 +76,23 @@ class PenjualanRepository
         if ($jumlah_sampai != '') $detail = $detail->where('jumlah', '>=', $jumlah_sampai);
 
         $tanggal_dari = $request->input('tanggal_dari') ?? '';
-        if ($tanggal_dari != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '>=', $tanggal_dari);
+        if ($tanggal_dari != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '<=', unformat_date($tanggal_dari));
 
         $tanggal_sampai = $request->input('tanggal_sampai') ?? '';
-        if ($tanggal_sampai != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '<=', $tanggal_sampai);
+        if ($tanggal_sampai != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '>=', unformat_date($tanggal_sampai));
 
         $group_produk = $request->input('group_produk') ?? '';
-        if ($group_produk != '') {
+        if ($group_produk != '')
             $detail = $detail->select('produk_id', DB::raw('count(*) as jumlah'))
                 ->groupBy('produk_id')
                 ->orderBy('jumlah', $group_produk)
                 ->with(['produk']);
-        }
+
+        $order_penjualan = $request->input('order_penjualan') ?? '';
+        if ($order_penjualan != '')
+            $detail = $detail->orderBy('penjualan_id', $order_penjualan)
+                ->addSelect('penjualan.tanggal_waktu_dibayar')
+                ->with(['penjualan']);
 
         if ($request->has('paginate')) return $detail->paginate($request->input('paginate'));
         return $detail->get();

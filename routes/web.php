@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\DashboardController;
 use App\Http\Controllers\Kasir\DashboardKasirController;
+use App\Http\Controllers\Kasir\LaporanPenjualanKasirController;
 use App\Http\Controllers\Kasir\LisensiKasirController;
 use App\Http\Controllers\Kasir\PengaturanKasirController;
 use App\Http\Controllers\Kasir\PenjualanKasirController;
@@ -158,6 +159,13 @@ Route::prefix('kasir')->group(function () {
             Route::post('save', [PenjualanKasirController::class, 'save_detail'])->name('kasir.penjualan.detail.save');
             Route::post('update', [PenjualanKasirController::class, 'update_detail'])->name('kasir.penjualan.detail.update');
             Route::post('delete', [PenjualanKasirController::class, 'delete_detail'])->name('kasir.penjualan.detail.delete');
+        });
+    });
+
+    Route::prefix('laporan')->group(function () {
+        Route::prefix('penjualan')->group(function () {
+            Route::get('/', [LaporanPenjualanKasirController::class, 'index'])->name('kasir.laporan.penjualan');
+            Route::post('search', [LaporanPenjualanKasirController::class, 'search'])->name('kasir.laporan.penjualan.search');
         });
     });
 });
