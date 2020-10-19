@@ -45,18 +45,18 @@
                 @if(!empty(\Illuminate\Support\Facades\Auth::user()->user_profil))
                 setTimeout(function () {
                     window.location.href = "{{ route('kasir.dashboard') }}";
-                }, 1000);
+                }, 500);
                 @else
                 setTimeout(function () {
                     window.location.href = "{{ route('home.dashboard') }}";
-                }, 1000);
+                }, 500);
                 @endif
             @endauth
 
             @guest
             setTimeout(function () {
                 window.location.href = "{{ route('login') }}";
-            }, 1000);
+            }, 500);
             @endguest
         </script>
     </body>
