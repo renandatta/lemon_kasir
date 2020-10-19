@@ -43,10 +43,10 @@
                                 <span class="text-muted font-weight-bold mt-2">Total Penjualan Hari Ini</span>
                             </div>
                         </div>
-                        <div id="chart_penjualan_minggu_ini" class="card-rounded-bottom" data-color="info" style="height: 200px"></div>
+                        <div id="chart_penjualan_minggu_ini" class="card-rounded-bottom" data-color="info" style="height: 150px"></div>
                     </div>
                 </div>
-                <div class="card card-custom card-stretch gutter-b">
+                <div class="card card-custom">
                     <div class="card-header border-0">
                         <h3 class="card-title font-weight-bolder text-dark">Produk Paling Banyak Terjual</h3>
                         <div class="card-toolbar">
@@ -57,27 +57,24 @@
                                 <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                                     <ul class="navi">
                                         <li class="navi-item">
-                                            <a href="#" class="navi-link">
+                                            <a href="javascript:void(0)" onclick="search_terlaris('semua')" class="navi-link">
                                                 <span class="navi-text">Keseluruhan</span>
-                                                <span class="navi-label">
-                                                    <span class="label label-light-success label-rounded font-weight-bold">
-                                                        <i class="la la-check"></i>
-                                                    </span>
+                                                <span class="navi-label check-terlaris" id="terlaris_check_semua">
                                                 </span>
                                             </a>
-                                            <a href="#" class="navi-link">
+                                            <a href="javascript:void(0)" onclick="search_terlaris('hari')" class="navi-link">
                                                 <span class="navi-text">Hari Ini</span>
-                                                <span class="navi-label">
+                                                <span class="navi-label check-terlaris" id="terlaris_check_hari">
                                                 </span>
                                             </a>
-                                            <a href="#" class="navi-link">
+                                            <a href="javascript:void(0)" onclick="search_terlaris('minggu')" class="navi-link">
                                                 <span class="navi-text">Minggu Ini</span>
-                                                <span class="navi-label">
+                                                <span class="navi-label check-terlaris" id="terlaris_check_minggu">
                                                 </span>
                                             </a>
-                                            <a href="#" class="navi-link">
+                                            <a href="javascript:void(0)" onclick="search_terlaris('bulan')" class="navi-link">
                                                 <span class="navi-text">Bulan Ini</span>
-                                                <span class="navi-label">
+                                                <span class="navi-label check-terlaris" id="terlaris_check_bulan">
                                                 </span>
                                             </a>
                                         </li>
@@ -86,14 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <div class="d-flex align-items-center flex-wrap mb-10">
-                            <div class="d-flex flex-column flex-grow-1 mr-2">
-                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Top Authors</a>
-                                <span class="text-muted font-weight-bold">Mark, Rowling, Esther</span>
-                            </div>
-                            <span class="label label-xl label-light label-inline my-lg-0 my-2 text-dark-50 font-weight-bolder">+82$</span>
-                        </div>
+                    <div class="card-body pt-0" id="list_terlaris">
                     </div>
                 </div>
             </div>
@@ -183,8 +173,8 @@
                     }
                 },
                 yaxis: {
-                    min: 0,
-                    max: 55,
+                    min: parseFloat('{{ min(array_column($total_minggu_ini, 'total'))-10000 }}'),
+                    max: parseFloat('{{ max(array_column($total_minggu_ini, 'total'))+10000 }}'),
                     labels: {
                         show: false,
                         style: {
@@ -238,5 +228,20 @@
             chart.render();
         }
         _initChartPenjualanMingguIni();
+
+        function search_terlaris(mode = 'semua') {
+            let $list_terlaris = $('#list_terlaris');
+            $list_terlaris.html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-fw"></i> Loading</div>');
+            $('.check-terlaris').html('');
+            $('#terlaris_check_' + mode).html('<span class="label label-light-success label-rounded font-weight-bold"><i class="la la-check"></i></span>');
+            $.post("{{ route('kasir.dashboard.produk_terlaris') }}", {
+                _token: '{{ csrf_token() }}', mode
+            }, (result) => {
+                $list_terlaris.html(result);
+            }).fail((xhr) => {
+                console.log(xhr.responseText);
+            });
+        }
+        search_terlaris();
     </script>
 @endpush

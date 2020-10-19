@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Penjualan;
 use App\Models\Penjualan\DetailPenjualan;
 use App\Models\Penjualan\Penjualan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanRepository
 {
@@ -31,6 +32,12 @@ class PenjualanRepository
         $tanggal = $request->input('tanggal_dibayar') ?? '';
         if ($tanggal != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', $tanggal);
 
+        $tanggal_dari = $request->input('tanggal_dari') ?? '';
+        if ($tanggal_dari != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', '>=', $tanggal_dari);
+
+        $tanggal_sampai = $request->input('tanggal_sampai') ?? '';
+        if ($tanggal_sampai != '') $penjualan = $penjualan->whereDate('tanggal_waktu_dibayar', '<=', $tanggal_sampai);
+
         $is_bayar = $request->input('is_bayar') ?? '';
         if ($is_bayar != '') $penjualan = $penjualan->where('is_bayar', $is_bayar);
 
@@ -40,7 +47,8 @@ class PenjualanRepository
 
     public function search_detail(Request $request)
     {
-        $detail = $this->detailPenjualan;
+        $detail = $this->detailPenjualan->select('detail_penjualan.*')
+            ->join('penjualan', 'penjualan.id', '=', 'detail_penjualan.penjualan_id');
 
         $penjualan_id = $request->input('penjualan_id') ?? '';
         if ($penjualan_id != '') $detail = $detail->where('penjualan_id', $penjualan_id);
@@ -52,7 +60,7 @@ class PenjualanRepository
         if ($jumlah != '') $detail = $detail->where('jumlah', $jumlah);
 
         $tanggal = $request->input('tanggal') ?? '';
-        if ($tanggal != '') $detail = $detail->whereDate('tanggal', $tanggal);
+        if ($tanggal != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', $tanggal);
 
         $jumlah_dari = $request->input('jumlah_dari') ?? '';
         if ($jumlah_dari != '') $detail = $detail->where('jumlah', '>=', $jumlah_dari);
@@ -61,10 +69,18 @@ class PenjualanRepository
         if ($jumlah_sampai != '') $detail = $detail->where('jumlah', '>=', $jumlah_sampai);
 
         $tanggal_dari = $request->input('tanggal_dari') ?? '';
-        if ($tanggal_dari != '') $detail = $detail->whereDate('tanggal', '>=', $tanggal_dari);
+        if ($tanggal_dari != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '>=', $tanggal_dari);
 
         $tanggal_sampai = $request->input('tanggal_sampai') ?? '';
-        if ($tanggal_sampai != '') $detail = $detail->whereDate('tanggal', '>=', $tanggal_sampai);
+        if ($tanggal_sampai != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '<=', $tanggal_sampai);
+
+        $group_produk = $request->input('group_produk') ?? '';
+        if ($group_produk != '') {
+            $detail = $detail->select('produk_id', DB::raw('count(*) as jumlah'))
+                ->groupBy('produk_id')
+                ->orderBy('jumlah', $group_produk)
+                ->with(['produk']);
+        }
 
         if ($request->has('paginate')) return $detail->paginate($request->input('paginate'));
         return $detail->get();

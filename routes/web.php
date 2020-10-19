@@ -120,6 +120,7 @@ Route::prefix('master')->group(function () {
 
 Route::prefix('kasir')->group(function () {
     Route::get('dashboard', [DashboardKasirController::class, 'index'])->name('kasir.dashboard');
+    Route::post('dashboard/produk_terlaris', [DashboardKasirController::class, 'produk_terlaris'])->name('kasir.dashboard.produk_terlaris');
 
     Route::prefix('pengaturan')->group(function () {
         Route::get('/', [PengaturanKasirController::class, 'index'])->name('kasir.pengaturan');
