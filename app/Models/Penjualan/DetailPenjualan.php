@@ -3,12 +3,13 @@
 namespace App\Models\Penjualan;
 
 use App\Models\Produk\Produk;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DetailPenjualan extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
     protected $table = 'detail_penjualan';
     protected $fillable = [
         'penjualan_id', 'produk_id', 'jumlah', 'harga'
