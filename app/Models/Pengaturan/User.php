@@ -3,12 +3,13 @@
 namespace App\Models\Pengaturan;
 
 use App\Models\Master\UserProfil;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
     protected $table = 'user';
 
     protected $fillable = [

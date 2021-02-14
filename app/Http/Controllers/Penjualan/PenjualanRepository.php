@@ -52,7 +52,9 @@ class PenjualanRepository
             ->with(['produk']);
 
         $profil_id = $request->input('profil_id') ?? '';
-        if ($profil_id != '') $detail = $detail->where('penjualan.profil_id', $profil_id);
+        if ($profil_id != '') $detail = $detail->whereHas('penjualan', function ($q) use ($profil_id) {
+            $q->where('profil_id', $profil_id);
+        });
 
         $is_bayar = $request->input('is_bayar') ?? '';
         if ($is_bayar != '') $detail = $detail->where('penjualan.is_bayar', $is_bayar);
@@ -76,10 +78,10 @@ class PenjualanRepository
         if ($jumlah_sampai != '') $detail = $detail->where('jumlah', '>=', $jumlah_sampai);
 
         $tanggal_dari = $request->input('tanggal_dari') ?? '';
-        if ($tanggal_dari != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '<=', unformat_date($tanggal_dari));
+        if ($tanggal_dari != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '>=', unformat_date($tanggal_dari));
 
         $tanggal_sampai = $request->input('tanggal_sampai') ?? '';
-        if ($tanggal_sampai != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '>=', unformat_date($tanggal_sampai));
+        if ($tanggal_sampai != '') $detail = $detail->whereDate('tanggal_waktu_dibayar', '<=', unformat_date($tanggal_sampai));
 
         $group_produk = $request->input('group_produk') ?? '';
         if ($group_produk != '')
