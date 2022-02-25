@@ -10,7 +10,7 @@
             <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                 <div class="d-flex align-items-center flex-wrap mr-1">
                     <div class="d-flex align-items-baseline flex-wrap mr-5">
-                        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">{{ $title }}</h2>
+                        <h2 class="subheader-title text-dark font-weight-bold my-1 mr-3">{{ $profil->nama }}</h2>
                     </div>
                 </div>
                 <div class="d-flex align-items-center">

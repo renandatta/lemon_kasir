@@ -24,6 +24,7 @@
     <meta property="og:description"        content="Aplikasi Kasir Minimalis dan Gratis" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap" rel="stylesheet">
 
     @stack('middle_styles')
 
@@ -42,6 +43,7 @@
     <a href="{{ route('/') }}">
         <img alt="Logo" src="{{ asset('lemon.png') }}" class="logo-default max-h-30px" />
     </a>
+    <span class="font-size-h3" style="font-family: 'Akaya Telivigala', cursive;color: darkorange;">Menyehatkan Penjualan Usaha</span>
     <div class="d-flex align-items-center">
         <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle"><span></span></button>
     </div>

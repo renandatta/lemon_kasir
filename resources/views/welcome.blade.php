@@ -62,9 +62,7 @@
             @endauth
 
             @guest
-            setTimeout(function () {
-                window.location.href = "{{ route('login') }}";
-            }, 500);
+                    window.location.href = "{{ route('login') }}";
             @endguest
         </script>
     </body>

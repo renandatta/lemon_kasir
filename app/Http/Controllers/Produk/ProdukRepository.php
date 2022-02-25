@@ -23,6 +23,10 @@ class ProdukRepository
         if ($nama != '')
             $produk = $produk->where('nama', 'like', '%'. $nama .'%');
 
+        $profil_id = $request->input('profil_id') ?? '';
+        if ($profil_id != '')
+            $produk = $produk->where('profil_id', $profil_id);
+
         $kode = $request->input('kode') ?? '';
         if ($kode != '')
             $produk = $produk->where('kode', $kode);

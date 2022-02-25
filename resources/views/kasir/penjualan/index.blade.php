@@ -280,6 +280,7 @@
         function search_produk() {
             $.post("{{ route('kasir.produk.search') }}", {
                 _token: '{{ csrf_token() }}',
+                profil_id: '{{ Auth::user()->user_profil->profil_id }}',
                 view: 'penjualan._list_produk'
             }, (result) => {
                 $list_data_produk.html(result);

@@ -3,20 +3,23 @@
 namespace App\Http\Controllers\Kasir;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Master\ProfilRepository;
 use App\Http\Controllers\Penjualan\PenjualanRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class DashboardKasirController extends Controller
 {
-    protected $penjualan;
-    public function __construct(PenjualanRepository $penjualan)
+    protected $penjualan, $profil;
+    public function __construct(PenjualanRepository $penjualan, ProfilRepository $profil)
     {
         $this->middleware('auth');
         $this->middleware('hak_akses');
 
         view()->share(['title' => 'Dashboard']);
         $this->penjualan = $penjualan;
+        $this->profil = $profil;
     }
 
     public function index()
@@ -34,12 +37,14 @@ class DashboardKasirController extends Controller
             ]);
         }
 
-        return view('kasir.dashboard.index', compact('total_penjualan', 'total_minggu_ini'));
+        $profil = $this->profil->find(Auth::user()->user_profil->profil_id);
+        return view('kasir.dashboard.index', compact('total_penjualan', 'total_minggu_ini', 'profil'));
     }
 
     public function total_penjualan($tanggal)
     {
-        $req = new Request(['tanggal_dibayar' => $tanggal]);
+        $profil = $this->profil->find(Auth::user()->user_profil->profil_id);
+        $req = new Request(['tanggal_dibayar' => $tanggal, 'profil_id' => $profil->id]);
         return $this->penjualan->search($req)->sum('total');
     }
 
@@ -73,9 +78,11 @@ class DashboardKasirController extends Controller
 
     public function search_produk_terlaris($tanggal_awal = '', $tanggal_akhir = '')
     {
+        $profil = $this->profil->find(Auth::user()->user_profil->profil_id);
         return $this->penjualan->search_detail(
             new Request(
                 [
+                    'profil_id' => $profil->id,
                     'tanggal_dari' => $tanggal_awal,
                     'tanggal_sampai' => $tanggal_akhir,
                     'group_produk' => 'desc'
